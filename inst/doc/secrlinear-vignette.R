@@ -185,7 +185,7 @@ out$df
 #      ml <- masklength(m1)
 #      points(centres, pch = 16, col = 'yellow', cex = 1.4)
 #      text (1406000, mean(m1$y), paste(ml, 'km'), cex = 1.2)
-#      }
+#  }
 #  
 
 ## ----,eval=TRUE----------------------------------------------------------

@@ -221,7 +221,7 @@ plot(linmask)
 ![**Fig. 3.** Artificial linear habitat mask][linearmask]
 
 **Fig. 3.**  Artificial linear habitat mask. Each mask segment 
-is 20 m long (centres are indicated by a grey dot).
+is 20 m long (pixel centres are indicated by a grey dot).
 
 ###Input from a text file of coordinates
 
@@ -254,7 +254,7 @@ showpath(silverstreammask, lwd = 3)
 \setkeys{Gin}{height=85mm, keepaspectratio=true}
 ![showpath][showpath]
 
-**Fig. 4.** Network path between two arbitrary points using
+**Fig. 4.** Network path between two arbitrary points, displayed using
   `showpath`. The dashed line corresponds to the Euclidean distance. 
   Euclidean and network distances are reported.
 
@@ -579,7 +579,7 @@ for (i in 1:nrow(OK)) {
     ml <- masklength(m1)
     points(centres, pch = 16, col = 'yellow', cex = 1.4)
     text (1406000, mean(m1$y), paste(ml, 'km'), cex = 1.2)
-    }
+}
 
 ```
 

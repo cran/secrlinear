@@ -2,6 +2,7 @@
 ## package 'secrlinear'
 ## networkdistance.R
 ## last changed 2014-09-05, 2014-09-07, 2014-10-26, 2014-10-30,31, 2014-11-01, 2014-11-04
+## 2014-12-08 replace NA with zero in tempdist
 ############################################################################################
 
 asgraph <- function (mask) {
@@ -18,6 +19,7 @@ asgraph <- function (mask) {
     ## value is the number of edges to create between a pair of vertices
     ## use only the lower triangle of distance matrix for undirected graph
     tempdist[!is.na(tempdist)] <- 1
+    tempdist[is.na(tempdist)] <- 0
     graph <- graph.adjacency(tempdist, mode = 'lower')
 
     ## force within-line spacings to actual separation along network,
@@ -66,7 +68,7 @@ networkdistance <- function (xy1, xy2, geometry) {
     ## obtain igraph representation
     gr <- attr(geometry, 'graph')
     if (is.null(gr)) gr <- asgraph(geometry)
-    
+
     ## relate points to geometry
     geometryxy <- cbind(V(gr)$x, V(gr)$y)
     matchedxy1 <- nearesttrap(xy1, geometryxy)

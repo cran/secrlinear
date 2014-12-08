@@ -68,9 +68,11 @@ newmask <- clipmask(mask, trps, buffer = 200)
 plot(newmask)
 plot(trps, add = TRUE)
 
-newmask <- clipmask(mask, trps, buffer = 200, clipvert = TRUE)
-plot(newmask)
-plot(trps, add = TRUE)
+if (require(rgeos)) {
+  newmask <- clipmask(mask, trps, buffer = 200, clipvert = TRUE)
+  plot(newmask)
+  plot(trps, add = TRUE)
+}
 
 }
 

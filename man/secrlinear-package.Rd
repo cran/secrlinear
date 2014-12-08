@@ -15,8 +15,8 @@ An \pkg{secr} add-on package for linear habitat models.
 \tabular{ll}{
 Package: \tab secr\cr
 Type: \tab Package\cr
-Version: \tab 1.0.3\cr
-Date: \tab 2014-12-02\cr
+Version: \tab 1.0.4\cr
+Date: \tab 2014-12-08\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
 

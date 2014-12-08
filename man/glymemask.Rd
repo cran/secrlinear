@@ -7,7 +7,7 @@
 
 \description{
 
-Habitat geometry for a trapping study of water voles (\emph{Arvicola aquaticus})
+Habitat geometry for a trapping study of water voles (\emph{Arvicola amphibius})
 along a river in Oxfordshire, U.K., used in conjunction with the capture
 dataset \link{arvicola}.
 
@@ -19,14 +19,13 @@ dataset \link{arvicola}.
 
 \details{
 
-  Water voles (\emph{Arvicola aquaticus}) were trapped monthly from May
-  1984 to May 1985 along 0.9 km of the River Glyme in Oxfordshire,
-  U.K. (Efford 1985).
+Water voles were trapped monthly from May 1984 to May 1985 along 0.9 km
+of the River Glyme in Oxfordshire, U.K. (Efford 1985).
   
-The raw data are provided both as a text file and as a shapefile in
-the `extdata' folder of the \pkg{secrlinear} installation. The
-vignette \url{../doc/secrlinear-vignette.pdf} shows how to import the
-data, which are also provided here as an \pkg{secr} object.
+The raw data are provided both as a text file and as a shapefile in the
+`extdata' folder of the \pkg{secrlinear} installation. The vignette
+\url{../doc/secrlinear-vignette.pdf} shows how to import the data, which
+are also provided here as an \pkg{secr} object.
 
 }
 
