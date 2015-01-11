@@ -115,9 +115,10 @@ coord <- data.frame(x = c(1,2,3,1.05,2.05,3.05),
 sldf1 <- make.sldf(coord)
 sldf2 <- make.sldf(coord, f = c(1,1,1,2,2,2))
 
-require(sp)
-plot(sldf1)
-plot(sldf2)
+if (require('sp')) {
+  plot(sldf1)
+  plot(sldf2)
+}
 
 ## test snapPointsToLinearMask()
 
@@ -143,8 +144,9 @@ df
 ## asgraph (called by networkdistance)
 ## see 'igraph' for further manipulation
 grmask <- asgraph(glymemask)
-require(igraph)
-summary(grmask)
+if (require('igraph')) {
+  summary(grmask)
+}
 
 }
 

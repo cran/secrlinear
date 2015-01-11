@@ -2,20 +2,11 @@
 title: '**secrlinear** - spatially explicit capture--recapture for linear habitats'
 author: "Murray Efford"
 date: '`r Sys.Date()`'
-output:
-  pdf_document:
-    toc: yes
-    toc_depth: 4
-  output: rmarkdown::pdf_vignette
-  html_document:
-    theme: united
-    toc: yes
-    toc_depth: 4
-  vignette: >
-    %\VignetteIndexEntry{Spatially Explicit Capture--Recapture for Linear Habitats} 
-    %\VignetteEngine{knitr::rmarkdown} 
-    \usepackage[utf8]{inputenc}\n"
-  word_document: default
+output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{Spatially Explicit Capture--Recapture for Linear Habitats} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  \usepackage[utf8]{inputenc}
 ---
 
 \vspace{12pt}

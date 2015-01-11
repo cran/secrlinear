@@ -69,8 +69,7 @@ read.linearmask(file = NULL, data = NULL, spacing = 10, spacingfactor =
   \code{\link{make.sldf}},
   \code{\link{networkdistance}},
   \code{\link[sp]{SpatialLinesDataFrame}}
-  \code{\link[sp]{spsample}}
-  
+ 
 }
 
 \note{

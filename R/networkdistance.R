@@ -3,6 +3,7 @@
 ## networkdistance.R
 ## last changed 2014-09-05, 2014-09-07, 2014-10-26, 2014-10-30,31, 2014-11-01, 2014-11-04
 ## 2014-12-08 replace NA with zero in tempdist
+## 2014-12-09 tentatively increased lwd for Euclidean path in showpath()
 ############################################################################################
 
 asgraph <- function (mask) {
@@ -104,7 +105,7 @@ showpath <- function (mask, add = FALSE, ...) {
             matched <- nearesttrap(xy, mask)
             points(xy, pch = 1, cex = 1.3, col = 'black', type = 'p')
             points(mask[matched,], pch = 16, cex = 1.3, col = 'red',
-                   type = 'o', lty = 2)
+                   type = 'o', lwd = 2, lty = 2)
             path <- get.shortest.paths(asgraph(mask), matched[1], matched[2])
             maskpoints <- data.frame(mask[path$vpath[[1]],])
             lines(maskpoints, col = 'red', type = 'l', ...)

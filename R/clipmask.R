@@ -1,7 +1,7 @@
 ############################################################################################
 ## package 'secrlinear'
 ## clipmask.R
-## last changed 2014-08-29 2014-09-09 2014-12-03
+## last changed 2014-08-29 2014-09-09 2014-12-03 2015-01-11
 ############################################################################################
 
 clipmask <- function (mask, traps, buffer = 100, clipvert = FALSE) {
@@ -9,7 +9,7 @@ clipmask <- function (mask, traps, buffer = 100, clipvert = FALSE) {
     inrange <- apply(tmp,1,min) < buffer
     mask <- subset(mask, inrange)
     if (clipvert) {
-        if (!require(rgeos))
+        if (!requireNamespace('rgeos', quietly = TRUE))
             stop ("clipvert requires package rgeos")
         SPDF <- SpatialPoints(coords = as.matrix(mask))
         SP <- rgeos::gBuffer(spgeom = SPDF, width = attr(mask, "spacing")/2)
