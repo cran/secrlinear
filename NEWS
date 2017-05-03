@@ -1,3 +1,9 @@
+Changes in version 1.1.0 (2017-05-03)
+
+Other
+    o   rgdal::readOGR used to read shapefiles (maptools::readShapexxx deprecated)
+    o   compatible secr 3.0.1
+
 Changes in version 1.0.5 (2015-01-11)
 
 Other

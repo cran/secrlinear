@@ -87,11 +87,15 @@ plot(mask)
 ## thicker band of grey points, dashed line
 plot(mask, cex = 2, lty = 2)
 
+## add a covariate, the distance downstream from the first mask point
+downstrm <- networkdistance(glymemask, glymemask[1,], glymemask)[,1]
+covariates(glymemask)<- data.frame(downstream = downstrm)
+
 ## point colour determined by a covariate
-plot(glymemask, cex = 2, covariate = 'x', pt.cex = 2)
+plot(glymemask, cex = 2, covariate = 'downstream', pt.cex = 2)
 
 ## point size determined by a covariate
-plot(glymemask, cex = covariates(glymemask)$x/50, pch = 21)
+plot(glymemask, cex = covariates(glymemask)$downstream/50, pch = 21)
 
 }
 

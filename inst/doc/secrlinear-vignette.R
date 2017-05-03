@@ -1,125 +1,128 @@
-## ----, eval = FALSE------------------------------------------------------
-#  library(secrlinear)   ## also loads secr
-#  library(maptools)     ## to read shapefiles
-#  library(igraph)       ## to investigate edge lengths
-#  options(digits = 4)   ## for more readable output
+## ----setup, eval = FALSE-------------------------------------------------
+#  library(secrlinear)   # also loads secr
+#  library(rgdal)         # to read shapefiles
+#  library(igraph)       # to investigate edge lengths
+#  options(digits = 4)   # for more readable output
+#  inputdir <- system.file("extdata", package = "secrlinear")
 
-## ----, eval = TRUE, echo = FALSE, include=FALSE--------------------------
+## ----setuphidden, eval = TRUE, echo = FALSE, include=FALSE---------------
 library(secrlinear)
-library(maptools)     ## to read shapefiles, later
-library(igraph)       ## to investigate edge lengths, later 
-options(digits=4)     ## for more readable output
+library(rgdal)         # to read shapefiles
+library(igraph)       # to investigate edge lengths, later 
+options(digits=4)     # for more readable output
+inputdir <- system.file("extdata", package = "secrlinear")
 
-## ----, eval = TRUE-------------------------------------------------------
-setwd(system.file("extdata", package = "secrlinear"))
-arvicola <- read.capthist("Jun84capt.txt", "glymetrap.txt", covname = "sex")
+## ----readarvicola, eval = TRUE-------------------------------------------
+captfile <- paste0(inputdir,"/Jun84capt.txt")
+trapfile <- paste0(inputdir,"/glymetrap.txt")
+arvicola <- read.capthist(captfile, trapfile, covname = "sex")
 
-## ----, eval = TRUE-------------------------------------------------------
-setwd(system.file("extdata", package = "secrlinear"))
-glymemask <- read.linearmask(file = "glymemap.txt", spacing = 4)
+## ----readglyme, eval = TRUE----------------------------------------------
+habitatmap <-  paste0(inputdir,"/glymemap.txt")
+glymemask <- read.linearmask(file = habitatmap, spacing = 4)
 
-## ----,eval = FALSE, fig.width = 7, fig.height=3--------------------------
+## ----plotglyme, eval = FALSE, fig.width = 7, fig.height=3----------------
 #  par(mar = c(1,1,1,1))
 #  plot(glymemask)
 #  plot(arvicola, add = TRUE, tracks = TRUE)
 #  plot(traps(arvicola), add = TRUE)
 
-## ----,eval = TRUE, warning=FALSE-----------------------------------------
-## 2-D habitat, Euclidean distance
+## ----fit1, eval = TRUE, warning = FALSE----------------------------------
+# 2-D habitat, Euclidean distance
 fit2DEuc <- secr.fit(arvicola, buffer = 200, trace = FALSE)   
 
-## 1-D habitat, Euclidean distance
+# 1-D habitat, Euclidean distance
 fit1DEuc <- secr.fit(arvicola, mask = glymemask, trace = FALSE)
 
-## 1-D habitat, river distance
+# 1-D habitat, river distance
 fit1DNet <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
                 details = list(userdist = networkdistance))
 
-## ----, eval=TRUE---------------------------------------------------------
+## ----predict, eval = TRUE------------------------------------------------
 predict(fit2DEuc)
 predict(fit1DEuc)
 predict(fit1DNet)
 
-## ----, eval = TRUE-------------------------------------------------------
-setwd(system.file("extdata", package = "secrlinear"))
-silverstreammask <- read.linearmask(file = "silverstream.shp", spacing = 50)
+## ----silvermask, eval = TRUE---------------------------------------------
+habitatmap <- paste0(inputdir, "/silverstream.shp")
+silverstreammask <- read.linearmask(file = habitatmap, spacing = 50)
 par(mar = c(1,1,1,1))
 plot(silverstreammask)
 
-## ----, eval = FALSE------------------------------------------------------
+## ----networklength, eval = FALSE-----------------------------------------
 #  networklength <- sum(SpatialLinesLengths(attr(silverstreammask, "SLDF"))) / 1000
-#  discrepancy <- networklength - masklength(silverstreammask)  ## km
+#  discrepancy <- networklength - masklength(silverstreammask)  # km
 
-## ----, eval = FALSE------------------------------------------------------
-#  setwd(system.file("extdata", package = "secrlinear"))
-#  silverstreamSLDF <- readShapeSpatial(fn = "silverstream")
+## ----silvermask2, eval = FALSE-------------------------------------------
+#  habitatmap <- paste0(inputdir, "/silverstream.shp")
+#  silverstreamSLDF <- rgdal::readOGR(dsn = habitatmap, layer = "silverstream")
 #  silverstreammask <- read.linearmask(data = silverstreamSLDF, spacing = 50)
 
-## ----, eval=TRUE---------------------------------------------------------
+## ----dataframemask, eval=TRUE--------------------------------------------
 x <- seq(0, 4*pi, length = 200)
 xy <- data.frame(x = x*100, y = sin(x)*300)
 linmask <- read.linearmask(data = xy, spacing = 20)
 
-## ----, eval = FALSE------------------------------------------------------
+## ----plotlinmask, eval = FALSE-------------------------------------------
 #  plot(linmask)
 
-## ----, eval = FALSE------------------------------------------------------
-#  ## start interactive session and click on two points
+## ----showpath, eval = FALSE----------------------------------------------
+#  # start interactive session and click on two points
 #  showpath(silverstreammask, lwd = 3)
 
-## ----, eval = TRUE-------------------------------------------------------
+## ----makeline, eval = TRUE-----------------------------------------------
 trps <- make.line(linmask, detector = "proximity", n = 40, startbuffer = 0, by = 300,
                   endbuffer = 80, cluster = c(0,40,80), type = 'randomstart')
 
-## ----, eval = FALSE------------------------------------------------------
+## ----plotline, eval = FALSE----------------------------------------------
 #  plot(linmask)
 #  plot(trps, add = TRUE, detpar = list(pch = 16, cex = 1.5, col='red'))
 
-## ----, eval = FALSE------------------------------------------------------
+## ----snappoints, eval = FALSE--------------------------------------------
 #  plot(silverstreammask)
 #  loc <- locator(30)
 #  xy <- snapPointsToLinearMask(data.frame(loc), silverstreammask)
 #  tr <- read.traps(data = xy, detector = 'multi')
 #  plot(tr, add = TRUE)
 
-## ----, eval = FALSE------------------------------------------------------
+## ----transect, eval = FALSE----------------------------------------------
 #  transects <- read.traps('transectxy.txt', detector = 'transect')
 #  capt <- read.table('capt.txt')
 #  tempCH <- make.capthist(capt, transects, fmt = 'XY')
-#  tempCH <- snip(tempCH, by = 100)   ## for 100-m segments
+#  tempCH <- snip(tempCH, by = 100)   # for 100-m segments
 #  CH <- reduce(tempCH, outputdetector = "count")
 
-## ----eval = TRUE, echo = FALSE-------------------------------------------
-setwd(system.file("extdata", package = "secrlinear"))
-tr <- read.traps("silverstreamtraps.txt", detector = "multi")
+## ----silvertrps, eval = TRUE, echo = FALSE-------------------------------
+trapfile <- paste0(inputdir, "/silverstreamtraps.txt")
+tr <- read.traps(trapfile, detector = "multi")
 
-## ----, eval = TRUE-------------------------------------------------------
-## simulate population of 2 animals / km
+## ----simCH, eval = TRUE--------------------------------------------------
+# simulate population of 2 animals / km
 pop <- sim.linearpopn(mask = silverstreammask, D = 2)
-## simulate detections using network distances
+# simulate detections using network distances
 CH <- sim.capthist(traps = tr, popn = pop, noccasions = 4,
                    detectpar = list(g0 = 0.25, sigma = 500), 
                    userdist = networkdistance)
-summary(CH)    ## detector spacing uses Euclidean distances
+summary(CH)    # detector spacing uses Euclidean distances
 
-## ----, eval=FALSE--------------------------------------------------------
-#  ## and plot the simulated detections...
+## ----plotsim, eval=FALSE-------------------------------------------------
+#  # and plot the simulated detections...
 #  par(mar = c(1,1,1,1))
 #  plot(silverstreammask)
 #  plot(CH, add = TRUE, tracks = TRUE, varycol = TRUE, rad = 100, cappar = list(cex = 2))
 #  plot(tr, add = TRUE)
 
-## ----, eval = FALSE------------------------------------------------------
+## ----sfit, eval = FALSE--------------------------------------------------
 #  userd <- networkdistance(tr, silverstreammask)
-#  userd[!is.finite(userd)] <- 1e8  ## testing
+#  userd[!is.finite(userd)] <- 1e8  # testing
 #  sfit <- secr.fit(CH, mask = silverstreammask, details = list(userdist = userd))
 #  predict(sfit)
 
-## ----, eval = TRUE-------------------------------------------------------
+## ----regionN, eval = TRUE------------------------------------------------
 region.N(fit2DEuc)
 region.N(fit1DNet)
 
-## ----, eval = FALSE------------------------------------------------------
+## ----plotregion, eval = FALSE--------------------------------------------
 #  par(mfrow = c(1,2), mar = c(1,1,1,1))
 #  plot(fit2DEuc$mask)
 #  plot(traps(arvicola), add = TRUE)
@@ -128,22 +131,22 @@ region.N(fit1DNet)
 #  plot(traps(arvicola), add = TRUE)
 #  mtext(side = 3,line = -1.5,"fit1DNet$mask", cex = 1)
 
-## ----,eval = TRUE--------------------------------------------------------
+## ----derived, eval = TRUE------------------------------------------------
 derived(fit2DEuc)
 derived(fit1DNet)
 
-## ----, eval = FALSE------------------------------------------------------
-#  ## interactively obtain LineID for central 'spine' by clicking on
-#  ## each component line in plot
+## ----covariates, eval = FALSE--------------------------------------------
+#  # interactively obtain LineID for central 'spine' by clicking on
+#  # each component line in plot
 #  tmp <- getLineID(silverstreammask)
-#  ## extract coordinates of 'spine'
+#  # extract coordinates of 'spine'
 #  spine <- subset(silverstreammask, LineID = tmp$LineID)
-#  ## obtain network distances to spine and save for later use
-#  netd <- networkdistance(spine, silverstreammask)  ## matrix dim = c(nrow(spine), nrow(mask))
-#  dfs <- apply(netd, 2, min) / 1000  ## km
+#  # obtain network distances to spine and save for later use
+#  netd <- networkdistance(spine, silverstreammask)  # matrix dim = c(nrow(spine), nrow(mask))
+#  dfs <- apply(netd, 2, min) / 1000  # km
 #  covariates(silverstreammask)$dist.from.spine <- dfs
 
-## ----, eval = FALSE------------------------------------------------------
+## ----plotcovariate, eval = FALSE-----------------------------------------
 #  par(mar=c(1,1,1,4))
 #  plot(silverstreammask, covariate = 'dist.from.spine', col = topo.colors(13),
 #       cex = 1.5, legend = FALSE)
@@ -151,30 +154,30 @@ derived(fit1DNet)
 #               title = 'dist.from.spine km', height = 0.35)
 #  plot(spine, add = TRUE, linecol = NA, cex = 0.3)
 
-## ----, eval = TRUE, strip.white = TRUE-----------------------------------
-## initially OK (no movement > 1000 m)--
-checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
-## deliberately break graph of linear mask
-attr(glymemask, 'graph')[200:203,201:204] <- NULL
-## no longer OK --
-out <- checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
-## display captures of animals 32 and 35 whose records span break
-out$df
+## ----checkmoves, eval = FALSE, strip.white = TRUE------------------------
+#  # initially OK (no movement > 1000 m)--
+#  checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
+#  # deliberately break graph of linear mask
+#  attr(glymemask, 'graph')[200:203,201:204] <- NULL
+#  # no longer OK --
+#  out <- checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
+#  # display captures of animals 32 and 35 whose records span break
+#  out$df
 
-## ----, eval = FALSE------------------------------------------------------
-#  ## problem shows up where voles recaptured either side of break:
+## ----showedges, eval = FALSE---------------------------------------------
+#  # problem shows up where voles recaptured either side of break:
 #  showedges(glymemask, col = 'red', lwd = 6)
 #  plot(out$CH, add = TRUE, tracks = TRUE, rad=8,cappar=list(cex=1.5))
 #  pos <- traps(arvicola)['560.B',]
 #  text(pos$x+5, pos$y+80, 'break', srt=90, cex=1.1)
 
-## ----, eval = FALSE------------------------------------------------------
+## ----plotglymeedges, eval = FALSE----------------------------------------
 #  plot(glymemask)
-#  replot(glymemask)  ## click on corners to zoom in
+#  replot(glymemask)  # click on corners to zoom in
 #  showedges(glymemask, col = 'red', lwd = 2, add=T)
 #  glymemask <- addedges(glymemask)
 
-## ----, eval = FALSE------------------------------------------------------
+## ----linearHR, eval = FALSE----------------------------------------------
 #  par(mfrow = c(1,1), mar = c(1,1,1,5))
 #  plot(silverstreammask)
 #  centres <- data.frame(locator(4))
@@ -188,45 +191,45 @@ out$df
 #  }
 #  
 
-## ----,eval=TRUE----------------------------------------------------------
+## ----secrdesign, eval = TRUE---------------------------------------------
 library(secrdesign)
 
-## create a habitat geometry
+# create a habitat geometry
 x <- seq(0, 4*pi, length = 200)
 xy <- data.frame(x = x*100, y = sin(x)*300)
 linmask <- read.linearmask(data = xy, spacing = 5)
 
-## define two possible detector layouts
+# define two possible detector layouts
 trp1 <- make.line(linmask, detector = "proximity", n = 80, start = 200, by = 30)
 trp2 <- make.line(linmask, detector = "proximity", n = 40, start = 200, by = 60)
 trplist <- list(spacing30 = trp1, spacing60 = trp2)
 
-## create a scenarios dataframe
+# create a scenarios dataframe
 scen1 <- make.scenarios(D = c(50,200), trapsindex = 1:2, sigma = 25, g0 = 0.2)
 
-## we specify the mask, rather than construct it 'on the fly',
-## we will use a non-Euclidean distance function for both
-## simulating detections and fitting the model...
+# we specify the mask, rather than construct it 'on the fly',
+# we will use a non-Euclidean distance function for both
+# simulating detections and fitting the model...
 det.arg <- list(userdist = networkdistance)
 fit.arg <- list(details = list(userdist = networkdistance))
 
-## run the scenarios and summarise results
+# run the scenarios and summarise results
 sims1 <- run.scenarios(nrepl = 50, trapset = trplist, maskset = linmask, 
     det.args = list(det.arg), fit.args = list(fit.arg),
     scenarios = scen1, seed = 345, fit = FALSE)
 summary(sims1)
 
-## ----, eval=FALSE--------------------------------------------------------
+## ----sims2, eval = FALSE-------------------------------------------------
 #  sims2 <- run.scenarios(nrepl = 5, trapset = trplist, maskset = linmask,
 #       det.args = list(det.arg), scenarios = scen1, seed = 345, fit = TRUE)
 #  summary(sims2)
 
-## ----, eval = FALSE------------------------------------------------------
-#  ## It is efficient to pre-compute a matrix of distances between traps (rows)
-#  ## and mask points (columns)
+## ----appendix, eval = FALSE----------------------------------------------
+#  # It is efficient to pre-compute a matrix of distances between traps (rows)
+#  # and mask points (columns)
 #  distmat <- networkdistance (traps(arvicola), glymemask, glymemask)
 #  
-#  ## Morning and evening trap checks as a time covariate
+#  # Morning and evening trap checks as a time covariate
 #  tcov <- data.frame(ampm = rep(c("am","pm"),3))
 #  
 #  glymefit1 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
@@ -244,7 +247,7 @@ summary(sims1)
 #                        timecov = tcov, hcov = "sex")
 #  
 #  fitlist <- secrlist(glymefit1, glymefit2, glymefit3, glymefit4)
-#  ## dropping the detectfn (halfnormal) column to save space...
+#  # dropping the detectfn (halfnormal) column to save space...
 #  AIC(fitlist)[,-2]
 #                                    model npar    logLik     AIC    AICc  dAICc AICcwt
 #  secr4 D~1 g0~ampm + h2 sigma~h2 pmix~h2    7 -322.5414 659.083 665.305  0.000      1
@@ -252,10 +255,10 @@ summary(sims1)
 #  secr2       D~1 g0~ampm sigma~1 pmix~h2    5 -353.4807 716.961 719.961 54.656      0
 #  secr1          D~1 g0~1 sigma~1 pmix~h2    4 -356.8020 721.604 723.509 58.204      0
 #  
-#  ## summaries of estimated density and sex ratio under different models
+#  # summaries of estimated density and sex ratio under different models
 #  options(digits=3)
 #  
-#  ## model does not affect density estimate
+#  # model does not affect density estimate
 #  collate(fitlist, perm = c(2,3,1,4))[,,1,"D"]
 #        estimate SE.estimate  lcl  ucl
 #  secr1     26.5        5.27 18.0 39.0
@@ -263,7 +266,7 @@ summary(sims1)
 #  secr3     26.3        5.25 17.9 38.8
 #  secr4     27.2        5.45 18.5 40.2
 #  
-#  ## model does affect the estimate of sex ratio (here proportion female)
+#  # model does affect the estimate of sex ratio (here proportion female)
 #  collate(fitlist, perm=c(2,3,1,4))[,,1,"pmix"]
 #        estimate SE.estimate   lcl   ucl
 #  secr1    0.615      0.0954 0.421 0.779
@@ -271,7 +274,7 @@ summary(sims1)
 #  secr3    0.634      0.0938 0.439 0.793
 #  secr4    0.669      0.0897 0.477 0.817
 #  
-#  ## predictions from best model
+#  # predictions from best model
 #  newdata <- expand.grid(ampm = c("am", "pm"), h2 = c("F", "M"))
 #  predict(glymefit4, newdata = newdata)
 #  
@@ -303,7 +306,7 @@ summary(sims1)
 #  sigma   log  70.9581     10.0551 53.8247 93.545
 #  pmix  logit   0.3311      0.0897  0.1829  0.523
 
-## ----, eval = FALSE------------------------------------------------------
+## ----derivedapp, eval = FALSE--------------------------------------------
 #  derived(glymefit4, distribution = 'binomial')
 #      estimate SE.estimate   lcl   ucl    CVn     CVa    CVD
 #  esa   0.9546          NA    NA    NA     NA      NA     NA

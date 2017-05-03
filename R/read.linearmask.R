@@ -4,6 +4,8 @@
 ## last changed 2014-08-30; 2014-10-26 graph attribute;
 ## 2014-10-31 optional read from shapefile
 ## 2014-11-03 make.linearmask (called by read.linearmask and rbind.linearmask)
+## "this resource by B. Rowlingson is quite inspiring :"
+## http://rstudio-pubs-static.s3.amazonaws.com/1572_7599552b60454033a0d5c5e6d2e34ffb.html
 ############################################################################################
 
 make.linearmask <- function (SLDF, spacing, spacingfactor, graph, cleanskips)  {
@@ -34,19 +36,19 @@ make.linearmask <- function (SLDF, spacing, spacingfactor, graph, cleanskips)  {
         ## covariates
         df <- data.frame(maskSPDF)
         covariates(mask) <- df
-        
+
         ## construct graph
         if (graph) {
             attr(mask, 'graph') <- asgraph(mask)
         }
-        
+
         ## remove termini etc.
         OK <- !(names(df) %in% c( "coords.x1", "coords.x2", "x", "y", "Terminal"))
         terminal <- df$Terminal
         mask <- mask[!terminal,]
         covariates(mask) <- covariates(mask)[!terminal,OK]
         attr(mask,'meanSD')  <- getMeanSD(mask)
-        
+
         if(cleanskips)
             mask <- cleanskips(mask)
     }
@@ -58,8 +60,11 @@ read.linearmask <- function (file = NULL, data = NULL, spacing = 10, spacingfact
                              graph = TRUE, cleanskips = TRUE, ...)
 {
     if (is.null(data) & !is.null(file)) {
-        if (tools::file_ext(file) == 'shp')
-            data <- readShapeSpatial(fn = tools::file_path_sans_ext(file))
+        if (tools::file_ext(file) == 'shp') {
+            spatialdata <- basename(file)
+            spatialdata <- substring(spatialdata, 1, nchar(spatialdata)-4)
+            data <- readOGR(dsn = file, layer = spatialdata)
+        }
         else
             data <- read.table (file, ...)
     }

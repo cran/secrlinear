@@ -1,12 +1,13 @@
 ############################################################################################
 ## package 'secrlinear'
 ## checkmoves.R
-## last changed 2014-12-01
+## last changed 2017-05-03
 ############################################################################################
 
 checkmoves <- function (CH, accept = c(0, 1000), userdist, mask, showall = TRUE, silent = FALSE) {
     if (ms(CH))
         stop("not ready for multi-session data")
+ 
     trps <- traps(CH)
     if (missing(userdist)) {
         if (missing(mask))
@@ -20,8 +21,12 @@ checkmoves <- function (CH, accept = c(0, 1000), userdist, mask, showall = TRUE,
     if (any(dim(userdist) != nrow(trps)))
         stop("userdist should be matrix of distances between detectors")
     rownames(userdist) <- rownames(trps)
-    m <- moves(CH, userdist = userdist)
-    ## infmoves <- sapply(m, function(x) any(!is.finite(x)))
+    
+    if (packageVersion("secr") <= "3.0.0")
+        m <- moves(CH, userdist = userdist)
+    else
+        m <- moves(CH, userdist = userdist, names = TRUE)
+
     badmoves <- sapply(m, function(x) any((x < accept[1]) | (x > accept[2])))
     out <- list(badmoves = badmoves)
     if (!any(badmoves)) {

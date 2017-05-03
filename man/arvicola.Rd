@@ -73,7 +73,6 @@ M. G. Efford unpublished data.
 
 \examples{
 
-summary(arvicola)
 head(traps(arvicola))
 
 ## for speed, pre-compute distance matrix
@@ -85,6 +84,8 @@ glymefit <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
 predict(glymefit)
 
 \dontrun{
+summary(arvicola)
+
 tmp <- secr.test(glymefit, nsim = 1000)
 tmp
 plot(tmp)

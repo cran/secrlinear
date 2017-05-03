@@ -74,7 +74,7 @@ read.linearmask(file = NULL, data = NULL, spacing = 10, spacingfactor =
 
 \note{
 
-A valid shapefile includes at least three files with extensions `.shp', `.dbf' and `.shx'. The full name of the .shp file is provided as the `file' argument of \code{read.linearmask}. The shapefile name without any extension is used as the first argument to the \pkg{maptools} function \code{readShapeSpatial}.
+A valid shapefile includes at least three files with extensions `.shp', `.dbf' and `.shx'. The full name of the .shp file is provided as the `file' argument of \code{read.linearmask}. 
 
 Line-level covariates are copied from SpatialLinesDataFrame input. Point-specific covariates may be added
 later using \code{\link[secr]{covariates}} or \code{\link[secr]{addCovariates}}.

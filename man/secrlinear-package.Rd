@@ -15,8 +15,8 @@ An \pkg{secr} add-on package for linear habitat models.
 \tabular{ll}{
 Package: \tab secr\cr
 Type: \tab Package\cr
-Version: \tab 1.0.5\cr
-Date: \tab 2015-01-11\cr
+Version: \tab 1.1.0\cr
+Date: \tab 2017-05-03\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
 
@@ -94,7 +94,7 @@ A more complex linear network (\link{Silverstream}) is provided as an ESRI shape
   research. \emph{InterJournal, Complex Systems} \bold{1695}. \url{http://igraph.org}.
 
  Pebesma, E.J. and Bivand, R. S. (2005) Classes and methods for spatial
-  data in R. \emph{R News} \bold{5}(\bold{2}), \url{http://cran.r-project.org/doc/Rnews/}.
+  data in R. \emph{R News} \bold{5}(\bold{2}), \url{https://cran.r-project.org/doc/Rnews/}.
 
 }
 
@@ -114,8 +114,8 @@ arvicola <- read.capthist("Jun84capt.txt", "glymetrap.txt",
 ## -- from text file of x-y coordinates
 glymemask <- read.linearmask(file = "glymemap.txt", spacing = 4)
 ## -- from a previously constructed SpatialLinesDataFrame
-library(maptools)
-SLDF <- readShapeSpatial("glymemap")
+library(rgdal)
+SLDF <- rgdal::readOGR(dsn = "glymemap.shp", layer = "glymemap")
 glymemask <- read.linearmask(data = SLDF, spacing = 4)
 
 ## display the mask and capture data
