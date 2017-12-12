@@ -39,7 +39,7 @@ drawing a new systematic sample.
 
 \seealso{
 
-  \code{\link[maptools]{spRbind}}, \code{\link{read.linearmask}},
+  \code{\link{spRbind}}, \code{\link{read.linearmask}},
   \link{linearmask}, \code{\link{subset.linearmask}}
 
   

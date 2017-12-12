@@ -40,8 +40,9 @@ ESRI (1998) \emph{ESRI shapefile technical description}.
 
 \dontrun{
 
-setwd(system.file("extdata", package = "secrlinear"))
-silverstreammask <- read.linearmask(file = "silverstream.shp", spacing = 50)
+inputdir <- system.file("extdata", package = "secrlinear")
+silverstreammask <- read.linearmask(file = paste0(inputdir,"/silverstream.shp"),
+    spacing = 50)
 par(mar = c(1,1,1,1))
 plot(silverstreammask)
 

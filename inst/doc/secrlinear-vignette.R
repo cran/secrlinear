@@ -1,27 +1,20 @@
-## ----setup, eval = FALSE-------------------------------------------------
-#  library(secrlinear)   # also loads secr
-#  library(rgdal)         # to read shapefiles
-#  library(igraph)       # to investigate edge lengths
-#  options(digits = 4)   # for more readable output
-#  inputdir <- system.file("extdata", package = "secrlinear")
-
-## ----setuphidden, eval = TRUE, echo = FALSE, include=FALSE---------------
-library(secrlinear)
-library(rgdal)         # to read shapefiles
-library(igraph)       # to investigate edge lengths, later 
-options(digits=4)     # for more readable output
+## ----setup, message = FALSE, warning = FALSE-----------------------------
+library(secrlinear)   # also loads secr
+library(rgdal)        # to read shapefiles
+library(igraph)       # to investigate edge lengths
+options(digits = 4)   # for more readable output
 inputdir <- system.file("extdata", package = "secrlinear")
 
 ## ----readarvicola, eval = TRUE-------------------------------------------
-captfile <- paste0(inputdir,"/Jun84capt.txt")
-trapfile <- paste0(inputdir,"/glymetrap.txt")
+captfile <- paste0(inputdir, "/Jun84capt.txt")
+trapfile <- paste0(inputdir, "/glymetrap.txt")
 arvicola <- read.capthist(captfile, trapfile, covname = "sex")
 
 ## ----readglyme, eval = TRUE----------------------------------------------
-habitatmap <-  paste0(inputdir,"/glymemap.txt")
+habitatmap <-  paste0(inputdir, "/glymemap.txt")
 glymemask <- read.linearmask(file = habitatmap, spacing = 4)
 
-## ----plotglyme, eval = FALSE, fig.width = 7, fig.height=3----------------
+## ----plotglyme, eval = FALSE, fig.width = 7, fig.height = 3--------------
 #  par(mar = c(1,1,1,1))
 #  plot(glymemask)
 #  plot(arvicola, add = TRUE, tracks = TRUE)
@@ -191,7 +184,7 @@ derived(fit1DNet)
 #  }
 #  
 
-## ----secrdesign, eval = TRUE---------------------------------------------
+## ----secrdesign, eval = TRUE, warning = FALSE----------------------------
 library(secrdesign)
 
 # create a habitat geometry
@@ -249,66 +242,66 @@ summary(sims1)
 #  fitlist <- secrlist(glymefit1, glymefit2, glymefit3, glymefit4)
 #  # dropping the detectfn (halfnormal) column to save space...
 #  AIC(fitlist)[,-2]
-#                                    model npar    logLik     AIC    AICc  dAICc AICcwt
-#  secr4 D~1 g0~ampm + h2 sigma~h2 pmix~h2    7 -322.5414 659.083 665.305  0.000      1
-#  secr3  D~1 g0~ampm + h2 sigma~1 pmix~h2    6 -347.3402 706.680 711.101 45.796      0
-#  secr2       D~1 g0~ampm sigma~1 pmix~h2    5 -353.4807 716.961 719.961 54.656      0
-#  secr1          D~1 g0~1 sigma~1 pmix~h2    4 -356.8020 721.604 723.509 58.204      0
+#  #                                       model npar logLik   AIC  AICc dAICc AICcwt
+#  # glymefit4 D~1 g0~ampm + h2 sigma~h2 pmix~h2    7 -322.5 659.1 665.3  0.00      1
+#  # glymefit3  D~1 g0~ampm + h2 sigma~1 pmix~h2    6 -347.3 706.7 711.1 45.80      0
+#  # glymefit2       D~1 g0~ampm sigma~1 pmix~h2    5 -353.5 717.0 720.0 54.66      0
+#  # glymefit1          D~1 g0~1 sigma~1 pmix~h2    4 -356.8 721.6 723.5 58.20      0
 #  
 #  # summaries of estimated density and sex ratio under different models
 #  options(digits=3)
 #  
 #  # model does not affect density estimate
 #  collate(fitlist, perm = c(2,3,1,4))[,,1,"D"]
-#        estimate SE.estimate  lcl  ucl
-#  secr1     26.5        5.27 18.0 39.0
-#  secr2     26.4        5.26 18.0 38.9
-#  secr3     26.3        5.25 17.9 38.8
-#  secr4     27.2        5.45 18.5 40.2
+#  #           estimate SE.estimate  lcl  ucl
+#  # glymefit1     26.5        5.27 18.0 39.0
+#  # glymefit2     26.4        5.26 18.0 38.9
+#  # glymefit3     26.3        5.25 17.9 38.8
+#  # glymefit4     27.2        5.45 18.5 40.2
 #  
 #  # model does affect the estimate of sex ratio (here proportion female)
 #  collate(fitlist, perm=c(2,3,1,4))[,,1,"pmix"]
-#        estimate SE.estimate   lcl   ucl
-#  secr1    0.615      0.0954 0.421 0.779
-#  secr2    0.615      0.0954 0.421 0.779
-#  secr3    0.634      0.0938 0.439 0.793
-#  secr4    0.669      0.0897 0.477 0.817
+#  #           estimate SE.estimate   lcl   ucl
+#  # glymefit1    0.615      0.0954 0.421 0.779
+#  # glymefit2    0.615      0.0954 0.421 0.779
+#  # glymefit3    0.634      0.0938 0.439 0.793
+#  # glymefit4    0.669      0.0897 0.477 0.817
 #  
 #  # predictions from best model
 #  newdata <- expand.grid(ampm = c("am", "pm"), h2 = c("F", "M"))
 #  predict(glymefit4, newdata = newdata)
 #  
-#  $`ampm = am, h2 = F`
-#         link estimate SE.estimate    lcl    ucl
-#  D       log   27.239      5.4478 18.477 40.158
-#  g0    logit    0.218      0.0463  0.141  0.322
-#  sigma   log   13.624      1.8764 10.414 17.823
-#  pmix  logit    0.669      0.0897  0.477  0.817
-#  
-#  $`ampm = pm, h2 = F`
-#         link estimate SE.estimate     lcl    ucl
-#  D       log   27.239      5.4478 18.4768 40.158
-#  g0    logit    0.116      0.0293  0.0694  0.186
-#  sigma   log   13.624      1.8764 10.4136 17.823
-#  pmix  logit    0.669      0.0897  0.4774  0.817
-#  
-#  $`ampm = am, h2 = M`
-#         link estimate SE.estimate     lcl    ucl
-#  D       log   27.239      5.4478 18.4768 40.158
-#  g0    logit    0.153      0.0392  0.0908  0.246
-#  sigma   log   70.958     10.0551 53.8247 93.545
-#  pmix  logit    0.331      0.0897  0.1829  0.523
-#  
-#  $`ampm = pm, h2 = M`
-#         link estimate SE.estimate     lcl    ucl
-#  D       log  27.2394      5.4478 18.4768 40.158
-#  g0    logit   0.0782      0.0201  0.0468  0.128
-#  sigma   log  70.9581     10.0551 53.8247 93.545
-#  pmix  logit   0.3311      0.0897  0.1829  0.523
+#  # $`ampm = am, h2 = F`
+#  #        link estimate SE.estimate    lcl    ucl
+#  # D       log   27.239      5.4478 18.477 40.158
+#  # g0    logit    0.218      0.0463  0.141  0.322
+#  # sigma   log   13.624      1.8764 10.414 17.823
+#  # pmix  logit    0.669      0.0897  0.477  0.817
+#  #
+#  # $`ampm = pm, h2 = F`
+#  #        link estimate SE.estimate     lcl    ucl
+#  # D       log   27.239      5.4478 18.4768 40.158
+#  # g0    logit    0.116      0.0293  0.0694  0.186
+#  # sigma   log   13.624      1.8764 10.4136 17.823
+#  # pmix  logit    0.669      0.0897  0.4774  0.817
+#  #
+#  # $`ampm = am, h2 = M`
+#  #        link estimate SE.estimate     lcl    ucl
+#  # D       log   27.239      5.4478 18.4768 40.158
+#  # g0    logit    0.153      0.0392  0.0908  0.246
+#  # sigma   log   70.958     10.0551 53.8247 93.545
+#  # pmix  logit    0.331      0.0897  0.1829  0.523
+#  #
+#  # $`ampm = pm, h2 = M`
+#  #        link estimate SE.estimate     lcl    ucl
+#  # D       log  27.2394      5.4478 18.4768 40.158
+#  # g0    logit   0.0782      0.0201  0.0468  0.128
+#  # sigma   log  70.9581     10.0551 53.8247 93.545
+#  # pmix  logit   0.3311      0.0897  0.1829  0.523
 
 ## ----derivedapp, eval = FALSE--------------------------------------------
 #  derived(glymefit4, distribution = 'binomial')
-#      estimate SE.estimate   lcl   ucl    CVn     CVa    CVD
-#  esa   0.9546          NA    NA    NA     NA      NA     NA
-#  D    27.2362       2.867 22.17 33.46 0.1038 0.01748 0.1053
+#  #     estimate SE.estimate   lcl   ucl    CVn     CVa    CVD
+#  # esa   0.9545          NA    NA    NA     NA      NA     NA
+#  # D    27.2396       2.867 22.17 33.46 0.1038 0.01747 0.1053
 

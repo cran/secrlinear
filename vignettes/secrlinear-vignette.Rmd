@@ -13,7 +13,7 @@ vignette: >
 
 \vspace{12pt}
 
-The R package **secrlinear** extends **secr** for animal populations
+The R package **[secrlinear]** extends **[secr]** for animal populations
 in linear habitats. A habitat is considered to be 'linear' if it is
 natural to express population density as number per unit length (e.g.,
 animals per km) rather than number per unit area (e.g., animals per
@@ -28,7 +28,7 @@ version 2.9.0 provided for the analysis of linear populations (e.g.,
 
 \vspace{12pt}
 
-#Introductory example
+# Introductory example
 
 Water voles (*Arvicola amphibius*) were trapped monthly in 1984 along
 0.9 km of the River Glyme near Woodstock in Oxfordshire, U.K. (Efford
@@ -48,23 +48,17 @@ as for 2-dimensional habitat in **secr**. Although single-catch traps
 were used, we set the detector type to "multi" to avoid later
 warnings.
 
-```{r setup, eval = FALSE}
+```{r setup, message = FALSE, warning = FALSE}
 library(secrlinear)   # also loads secr
-library(rgdal)         # to read shapefiles
+library(rgdal)        # to read shapefiles
 library(igraph)       # to investigate edge lengths
 options(digits = 4)   # for more readable output
 inputdir <- system.file("extdata", package = "secrlinear")
 ```
-```{r setuphidden, eval = TRUE, echo = FALSE, include=FALSE}
-library(secrlinear)
-library(rgdal)         # to read shapefiles
-library(igraph)       # to investigate edge lengths, later 
-options(digits=4)     # for more readable output
-inputdir <- system.file("extdata", package = "secrlinear")
-```
+
 ```{r readarvicola, eval = TRUE}
-captfile <- paste0(inputdir,"/Jun84capt.txt")
-trapfile <- paste0(inputdir,"/glymetrap.txt")
+captfile <- paste0(inputdir, "/Jun84capt.txt")
+trapfile <- paste0(inputdir, "/glymetrap.txt")
 arvicola <- read.capthist(captfile, trapfile, covname = "sex")
 ```
 Next we need to define the linear habitat geometry. For one simple
@@ -74,23 +68,21 @@ origin; distances are in metres. We form a 'linearmask' object by
 cutting the line at 4-m intervals.
 
 ```{r readglyme, eval = TRUE}
-habitatmap <-  paste0(inputdir,"/glymemap.txt")
+habitatmap <-  paste0(inputdir, "/glymemap.txt")
 glymemask <- read.linearmask(file = habitatmap, spacing = 4)
 ```
 Now we can display the data:
-```{r plotglyme, eval = FALSE, fig.width = 7, fig.height=3}
+```{r plotglyme, eval = FALSE, fig.width = 7, fig.height = 3}
 par(mar = c(1,1,1,1))
 plot(glymemask)
 plot(arvicola, add = TRUE, tracks = TRUE)
 plot(traps(arvicola), add = TRUE)
 ```
 \setkeys{Gin}{height=80mm, keepaspectratio=true}
-
-![**Fig. 1.** Water vole captures along R. Glyme in June 1984. Traps (red
-  crosses) spanned 860 m of river bank][arvicolaplot]
+![arvicolaplot][arvicolaplot]
   
 **Fig. 1.** Water vole captures along R. Glyme in June 1984. Traps (red
-  crosses) spanned 860 m of river bank
+  crosses) spanned 860 m of river bank.
   
 <br> We can fit a spatially explicit model to the water vole data in
 three ways: (i) ignoring the linearity of the habitat (fit2DEuc), (ii)
@@ -127,7 +119,7 @@ this instance because the river is unbranched and nearly straight.
 In the rest of this vignette we explore in more detail the options for
 linear SECR that are available in **secrlinear**.
 
-#Linear habitat masks
+# Linear habitat masks
 
 The representation of linear habitat in **secrlinear** is based on the
 SpatialLinesDataFrame object class defined in the package **sp**
@@ -153,7 +145,7 @@ or a file containing coordinate data (as in the introductory
 example). The first two methods allow for complex combinations of lines, including branching networks.  The 'spacing' argument of `read.linearmask` determines the 
 coarseness of the discretization.
 
-##Input from a polyline shapefile
+## Input from a polyline shapefile
 
 The 'file' argument of `read.linearmask` may be the name of a shapefile, including the
 '.shp' extension. The function `readOGR` from **rgdal** (Bivand et al. 2005) is used internally to create a SpatialLinesDataFrame from the shapefile. 
@@ -187,7 +179,7 @@ discrepancy <- networklength - masklength(silverstreammask)  # km
 In this case the discrepancy is `r round(sum(SpatialLinesLengths(attr(silverstreammask, "SLDF"))) / 1000 -
 masklength(silverstreammask),2)` km.
 
-##Input from a SpatialLinesDataFrame
+## Input from a SpatialLinesDataFrame
 
 The 'data' argument of `read.linearmask` may be a SpatialLinesDataFrame object. This allows for data to be imported from GIS sources other than shapefiles, and for selection of features, re-projection, or other manipulation. 
 
@@ -197,7 +189,7 @@ silverstreamSLDF <- rgdal::readOGR(dsn = habitatmap, layer = "silverstream")
 silverstreammask <- read.linearmask(data = silverstreamSLDF, spacing = 50)
 ```
 
-##Input from a dataframe of coordinates
+## Input from a dataframe of coordinates
 
 Alternatively, a simple mask may be constructed from a dataframe of coordinates. 
 This example generates an artificial geometry.
@@ -212,24 +204,23 @@ plot(linmask)
 ```
 
 \setkeys{Gin}{height=65mm, keepaspectratio=true}
-
-![**Fig. 3.** Artificial linear habitat mask][linearmask]
+![linearmask][linearmask]
 
 **Fig. 3.**  Artificial linear habitat mask. Each mask segment 
 is 20 m long (pixel centres are indicated by a grey dot).
 
-##Input from a text file of coordinates
+## Input from a text file of coordinates
 
 See water vole example.
 
-#Network distance
+# Network distance
 
 If the movement of animals is largely confined to the linear network
 then it makes sense to measure distances along the network rather than
 as the crow flies. Network distances are non-Euclidean. If the animals
 concentrate their movements around linear features, but do not use
 them exclusively, then other non-Euclidean approaches may be
-appropriate (cf Royle et al. 2013, Sutherland et al. 2014). These
+appropriate (cf Royle et al. 2013, Sutherland et al. 2015). These
 require the estimation of an additional parameter and use a
 2-dimensional habitat mask.
 
@@ -279,13 +270,13 @@ represents the linear network. For example, nodes may be added
 precisely at the intersections of streams, and linked by edges to the
 adjoining mask points, while deleting 'skip' edges. You are mostly
 on your own here, but see http://rpubs.com/edzer/spatialnetworks and
-possibly http://cran.r-project.org/web/packages/shp2graph.
+possibly https://CRAN.R-project.org/package=shp2graph.
 
 The functions `showedges`, `replot` and `deleteedges` are provided for editing the graph (see Examples in `help(deleteedges)`). `addedges` may be used to replace edges deleted by mistake or to bridge unwanted gaps in a network. `cleanskips` drops all but the shortest edge joining any two different lines; it is called by default by `read.linearmask`.
 
 <br>
 
-#Detector layouts
+# Detector layouts
 
 Detector layouts ('traps' objects in **secr**) are the same in linear and
 2-dimensional habitat models, except for the fact that detectors are
@@ -342,7 +333,7 @@ tempCH <- snip(tempCH, by = 100)   # for 100-m segments
 CH <- reduce(tempCH, outputdetector = "count")
 ```
 
-#Simulating detection data
+# Simulating detection data
 
 Here we describe the core functions used to simulate detection data for linear habitats. See also [Evaluating study designs](#evaluating-study-designs).
 
@@ -397,7 +388,7 @@ plot(tr, add = TRUE)
 
 <br>
 
-#Model fitting
+# Model fitting
 
 Spatially explicit capture--recapture models for linear populations
 may be fitted using the **secr** function `secr.fit` with only slight
@@ -431,9 +422,9 @@ animal's home-range centre. In other words, the fitted parameter $\sigma$
 scales with network distance (the units for $\sigma$ are metres, as with
 a 2-dimensional model).
 
-#Advanced topics
+# Advanced topics
 
-##Population size and effective sampling area
+## Population size and effective sampling area
 
 The usual **secr** functions for population size in a defined region,
 and for derived (conditional-likelihood) estimates, may be applied to
@@ -477,7 +468,7 @@ model than the 2-D model, and this improves the precision of the
 density estimate. The other component of precision (CVn) is identical
 for the two models when `distribution = "poisson"` (the default).
 
-##Linear habitat covariates
+## Linear habitat covariates
 
 Mask covariates are used to model spatial variation in population
 density. If the input to `read.linearmask` is a SpatialLinesDataFrame
@@ -525,7 +516,7 @@ that if you wish to predict detection parameters (g0, sigma etc.) the
 relevant covariate(s) generally should be associated with detectors (the 'traps'
 component of a 'capthist' object). 
 
-##Discontinuities and traversable non-habitat
+## Discontinuities and traversable non-habitat
 
 'Habitat' is the set of places where an animal may live, which we interpret for SECR as the set of possible home-range centres (loosely defined). Under the usual 2-dimensional SECR model, detection is a function of distance between a detector and the home-range centre irrespective of the continuity of habitat. This entails the (usually unstated) assumption that non-habitat is traversable, and detection is not prevented by intervening non-habitat. The reverse assumption (non-habitat is not traversed) is the default in linear SECR models. This is because distance is calculated from the network graph, and mask points that are not connected, either directly or indirectly, are considered to be an infinite distance apart. 
 
@@ -558,7 +549,7 @@ glymemask <- addedges(glymemask)
 
 The edge weight (edge length) assigned by `addedges` defaults to the Euclidean geographical distance between pixel centroids, which is an adequate approximation for small distances. The appropriate weight for edges added to bridge zones of non-habitat is a larger question that will depend on the biology of the species, and may involve estimated non-Euclidean distance parameters as in Royle et al. (2013) and [secr-noneuclidean.pdf][].
 
-##Linear home-range size
+## Linear home-range size
 
 The implementation of the SECR model in **secrlinear** uses $\sigma$ as the parameter to represent the spatial scale of detection. For many purposes $\sigma$ may also be interpreted as the spatial scale of animal movements, or an index of home-range size. However, there are subtleties in the relation between $\sigma$ and home-range size for both 2-dimensional and linear habitat. Two animals with the same value of $\sigma$ will have the same home-range size (perhaps defined as a 95\% activity area) only if there is an equal extent of habitat within their respective neighbourhoods. This need not be the case for individuals in a dendritic network (Fig. 9).
 
@@ -585,7 +576,7 @@ for (i in 1:nrow(OK)) {
 
 It is possible, in principle, to fit a model in which $\sigma$ varies across the network inversely with the channel density, so as to maintain a constant length of channel in each animal's home range.
 
-##Evaluating study designs
+## Evaluating study designs
 
 The R package **[secrdesign]** is a convenient wrapper for the
 simulation capability of **secr**, and this extends to linear
@@ -596,7 +587,7 @@ of density estimates from a fitted model. Here is a simple example
 using two linear detector layouts with a population
 at two densities (50/km, 200/km) in a linear habitat.
 
-```{r secrdesign, eval = TRUE}
+```{r secrdesign, eval = TRUE, warning = FALSE}
 library(secrdesign)
 
 # create a habitat geometry
@@ -635,7 +626,7 @@ sims2 <- run.scenarios(nrepl = 5, trapset = trplist, maskset = linmask,
 summary(sims2)
 ```
 
-#Limitations, tips and troubleshooting
+# Limitations, tips and troubleshooting
 
 1. `read.linearmask` treats each Lines component of a SpatialLinesdataFrame as a separate entity, and discretizes it independently of other lines. The input (even a
   SpatialLinesDataFrame) has no inherent topology (junctions are not coded). The discretized
@@ -676,7 +667,7 @@ locations. While a radius of $2.45\sigma$ encompasses 95\% of a
 circular bivariate normal home range, a span of $\pm 1.96\sigma$ spans
 the same fraction of a 2-sided linear normal home range.
 
-#References
+# References
 
 Bivand, R., Keitt, T and Rowlingson, B. (2016). rgdal: Bindings
   for the Geospatial Data Abstraction Library. R package version 1.1-9.
@@ -708,11 +699,11 @@ T. A. (2013) Spatial capture--recapture models for jointly estimating
 population density and landscape connectivity. *Ecology* **94**
 287--294.
 
-Sutherland, C., Fuller, A. K. and Royle, J. A. (2014) Modelling
+Sutherland, C., Fuller, A. K. and Royle, J. A. (2015) Modelling
 non-Euclidean movement and landscape connectivity in highly structured
-ecological networks. *Methods in Ecology and Evolution* (in press).
+ecological networks. *Methods in Ecology and Evolution* **6**, 169--177.
 
-#Appendix. Extended water vole example. {#appendix}
+# Appendix. Extended water vole example. {#appendix}
 
 Here we continue the water vole analysis with one or two twists... The
 `hcov' formulation estimates the sex ratio and allows for sex-based
@@ -745,62 +736,62 @@ glymefit4 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
 fitlist <- secrlist(glymefit1, glymefit2, glymefit3, glymefit4)
 # dropping the detectfn (halfnormal) column to save space...
 AIC(fitlist)[,-2]
-                                  model npar    logLik     AIC    AICc  dAICc AICcwt
-secr4 D~1 g0~ampm + h2 sigma~h2 pmix~h2    7 -322.5414 659.083 665.305  0.000      1
-secr3  D~1 g0~ampm + h2 sigma~1 pmix~h2    6 -347.3402 706.680 711.101 45.796      0
-secr2       D~1 g0~ampm sigma~1 pmix~h2    5 -353.4807 716.961 719.961 54.656      0
-secr1          D~1 g0~1 sigma~1 pmix~h2    4 -356.8020 721.604 723.509 58.204      0
+#                                       model npar logLik   AIC  AICc dAICc AICcwt
+# glymefit4 D~1 g0~ampm + h2 sigma~h2 pmix~h2    7 -322.5 659.1 665.3  0.00      1
+# glymefit3  D~1 g0~ampm + h2 sigma~1 pmix~h2    6 -347.3 706.7 711.1 45.80      0
+# glymefit2       D~1 g0~ampm sigma~1 pmix~h2    5 -353.5 717.0 720.0 54.66      0
+# glymefit1          D~1 g0~1 sigma~1 pmix~h2    4 -356.8 721.6 723.5 58.20      0
 
 # summaries of estimated density and sex ratio under different models
 options(digits=3)
 
 # model does not affect density estimate
 collate(fitlist, perm = c(2,3,1,4))[,,1,"D"]
-      estimate SE.estimate  lcl  ucl
-secr1     26.5        5.27 18.0 39.0
-secr2     26.4        5.26 18.0 38.9
-secr3     26.3        5.25 17.9 38.8
-secr4     27.2        5.45 18.5 40.2
+#           estimate SE.estimate  lcl  ucl
+# glymefit1     26.5        5.27 18.0 39.0
+# glymefit2     26.4        5.26 18.0 38.9
+# glymefit3     26.3        5.25 17.9 38.8
+# glymefit4     27.2        5.45 18.5 40.2
 
 # model does affect the estimate of sex ratio (here proportion female)
 collate(fitlist, perm=c(2,3,1,4))[,,1,"pmix"]
-      estimate SE.estimate   lcl   ucl
-secr1    0.615      0.0954 0.421 0.779
-secr2    0.615      0.0954 0.421 0.779
-secr3    0.634      0.0938 0.439 0.793
-secr4    0.669      0.0897 0.477 0.817
+#           estimate SE.estimate   lcl   ucl
+# glymefit1    0.615      0.0954 0.421 0.779
+# glymefit2    0.615      0.0954 0.421 0.779
+# glymefit3    0.634      0.0938 0.439 0.793
+# glymefit4    0.669      0.0897 0.477 0.817
 
 # predictions from best model
 newdata <- expand.grid(ampm = c("am", "pm"), h2 = c("F", "M"))
 predict(glymefit4, newdata = newdata)
 
-$`ampm = am, h2 = F`
-       link estimate SE.estimate    lcl    ucl
-D       log   27.239      5.4478 18.477 40.158
-g0    logit    0.218      0.0463  0.141  0.322
-sigma   log   13.624      1.8764 10.414 17.823
-pmix  logit    0.669      0.0897  0.477  0.817
-
-$`ampm = pm, h2 = F`
-       link estimate SE.estimate     lcl    ucl
-D       log   27.239      5.4478 18.4768 40.158
-g0    logit    0.116      0.0293  0.0694  0.186
-sigma   log   13.624      1.8764 10.4136 17.823
-pmix  logit    0.669      0.0897  0.4774  0.817
-
-$`ampm = am, h2 = M`
-       link estimate SE.estimate     lcl    ucl
-D       log   27.239      5.4478 18.4768 40.158
-g0    logit    0.153      0.0392  0.0908  0.246
-sigma   log   70.958     10.0551 53.8247 93.545
-pmix  logit    0.331      0.0897  0.1829  0.523
-
-$`ampm = pm, h2 = M`
-       link estimate SE.estimate     lcl    ucl
-D       log  27.2394      5.4478 18.4768 40.158
-g0    logit   0.0782      0.0201  0.0468  0.128
-sigma   log  70.9581     10.0551 53.8247 93.545
-pmix  logit   0.3311      0.0897  0.1829  0.523
+# $`ampm = am, h2 = F`
+#        link estimate SE.estimate    lcl    ucl
+# D       log   27.239      5.4478 18.477 40.158
+# g0    logit    0.218      0.0463  0.141  0.322
+# sigma   log   13.624      1.8764 10.414 17.823
+# pmix  logit    0.669      0.0897  0.477  0.817
+# 
+# $`ampm = pm, h2 = F`
+#        link estimate SE.estimate     lcl    ucl
+# D       log   27.239      5.4478 18.4768 40.158
+# g0    logit    0.116      0.0293  0.0694  0.186
+# sigma   log   13.624      1.8764 10.4136 17.823
+# pmix  logit    0.669      0.0897  0.4774  0.817
+# 
+# $`ampm = am, h2 = M`
+#        link estimate SE.estimate     lcl    ucl
+# D       log   27.239      5.4478 18.4768 40.158
+# g0    logit    0.153      0.0392  0.0908  0.246
+# sigma   log   70.958     10.0551 53.8247 93.545
+# pmix  logit    0.331      0.0897  0.1829  0.523
+# 
+# $`ampm = pm, h2 = M`
+#        link estimate SE.estimate     lcl    ucl
+# D       log  27.2394      5.4478 18.4768 40.158
+# g0    logit   0.0782      0.0201  0.0468  0.128
+# sigma   log  70.9581     10.0551 53.8247 93.545
+# pmix  logit   0.3311      0.0897  0.1829  0.523
 ```
 
 Some general observations:
@@ -818,9 +809,9 @@ realised density on this river we would be justified in setting
 distribution = ``binomial''; this improves the RSE ('CVD') to about 10\%:
 ```{r derivedapp, eval = FALSE}
 derived(glymefit4, distribution = 'binomial')
-    estimate SE.estimate   lcl   ucl    CVn     CVa    CVD
-esa   0.9546          NA    NA    NA     NA      NA     NA
-D    27.2362       2.867 22.17 33.46 0.1038 0.01748 0.1053
+#     estimate SE.estimate   lcl   ucl    CVn     CVa    CVD
+# esa   0.9545          NA    NA    NA     NA      NA     NA
+# D    27.2396       2.867 22.17 33.46 0.1038 0.01747 0.1053
 ```
 
 Adult males had much larger home ranges than adult females at this
@@ -848,5 +839,7 @@ terminal traps) was adequate, even for males.
 [secr-manual.pdf]: http://www.otago.ac.nz/density/pdfs/secr-manual.pdf
 [secr-datainput.pdf]: http://www.otago.ac.nz/density/pdfs/secr-datainput.pdf
 [secr-noneuclidean.pdf]: http://www.otago.ac.nz/density/pdfs/secr-noneuclidean.pdf
-[secrdesign]: http://cran.r-project.org/web/packages/secrdesign/vignettes/secrdesign-vignette.pdf
+[secr]: https://CRAN.R-project.org/package=secr
+[secrlinear]: https://CRAN.R-project.org/package=secrlinear
+[secrdesign]: https://CRAN.R-project.org/package=secrdesign
 

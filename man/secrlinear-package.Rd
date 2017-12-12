@@ -15,8 +15,8 @@ An \pkg{secr} add-on package for linear habitat models.
 \tabular{ll}{
 Package: \tab secr\cr
 Type: \tab Package\cr
-Version: \tab 1.1.0\cr
-Date: \tab 2017-05-03\cr
+Version: \tab 1.1.1\cr
+Date: \tab 2017-12-13\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
 
@@ -105,17 +105,17 @@ A more complex linear network (\link{Silverstream}) is provided as an ESRI shape
 ## Water voles in June 1984 on the R. Glyme in Oxfordshire, UK
 ## capture and trap location files are exactly as for a 2-D analysis
 
-olddir <- setwd(system.file("extdata", package = "secrlinear"))
-on.exit(setwd(olddir))
-arvicola <- read.capthist("Jun84capt.txt", "glymetrap.txt",
-             detector = "multi", covname = "sex")
+inputdir <- system.file("extdata", package = "secrlinear")
+arvicola <- read.capthist(captfile = paste0(inputdir, "/Jun84capt.txt"), 
+    trapfile = paste0(inputdir, "/glymetrap.txt"), detector = "multi", 
+    covname = "sex")
 
 ## Import map of linear habitat
 ## -- from text file of x-y coordinates
-glymemask <- read.linearmask(file = "glymemap.txt", spacing = 4)
+glymemask <- read.linearmask(file = paste0(inputdir, "/glymemap.txt"), spacing = 4)
 ## -- from a previously constructed SpatialLinesDataFrame
 library(rgdal)
-SLDF <- rgdal::readOGR(dsn = "glymemap.shp", layer = "glymemap")
+SLDF <- rgdal::readOGR(dsn = paste0(inputdir,"/glymemap.shp"), layer = "glymemap")
 glymemask <- read.linearmask(data = SLDF, spacing = 4)
 
 ## display the mask and capture data

@@ -92,9 +92,8 @@ The dataframe is returned invisibly if \code{plt = TRUE}.
 
 \examples{
 \dontrun{
-
-setwd(system.file("extdata", package = "secrlinear"))
-tempmask <- read.linearmask(file = "silverstream.shp", spacing = 50)
+inputdir <- system.file("extdata", package = "secrlinear")
+tempmask <- read.linearmask(file = paste0(inputdir, "/silverstream.shp", spacing = 50)
 
 ## show all edges
 plot(tempmask, linecol = 'white')
