@@ -53,7 +53,7 @@ clipmask(mask, traps, buffer = 100, clipvert = FALSE)
 
   Bivand, R. and Rundel, C. (2014) rgeos: Interface to Geometry
   Engine - Open Source (GEOS). R package version 0.3-4.
-  \url{https://CRAN.R-project.org/package=rgeos}
+  \url{https://CRAN.R-project.org/package=rgeos/}
 
 }
 

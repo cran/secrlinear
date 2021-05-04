@@ -138,7 +138,7 @@ showpath <- function (mask, add = FALSE, ...) {
 ## buildTopo = function(lines) {
 ## Another approach - just kept for future reference
 ## Barry Rowlingson
-## http://rstudio-pubs-static.s3.amazonaws.com/1572_7599552b60454033a0d5c5e6d2e34ffb.html
+## https://rstudio-pubs-static.s3.amazonaws.com/1572_7599552b60454033a0d5c5e6d2e34ffb.html
 ##     g = gIntersection(lines, lines)
 ##     edges = do.call(rbind, lapply(g@lines[[1]]@Lines, function(ls) {
 ##         as.vector(t(ls@coords))

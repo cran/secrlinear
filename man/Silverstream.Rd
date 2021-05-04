@@ -23,7 +23,7 @@ An ESRI polyline shapefile (silverstream.shp, silverstream.shx, silverstream.dbf
 \source{
 
   Land Information New Zealand (LINZ) 1:50 000 topographic database
-  \url{http://data.linz.govt.nz/layer/327-nz-mainland-river-centrelines-topo-150k/}
+  \url{https://data.linz.govt.nz/layer/50327-nz-river-centrelines-topo-150k/}
   licensed by LINZ for re-use under the Creative Commons Attribution 3.0
   New Zealand licence. Downloaded 2014-10-26.
 
@@ -32,8 +32,7 @@ An ESRI polyline shapefile (silverstream.shp, silverstream.shx, silverstream.dbf
 \references{
 
 ESRI (1998) \emph{ESRI shapefile technical description}.
-    \url{http://www.esri.com/library/whitepapers/pdfs/shapefile.pdf}.
-
+\url{https://www.esri.com/content/dam/esrisites/sitecore-archive/Files/Pdfs/library/whitepapers/pdfs/shapefile.pdf}.
 }
 
 \examples{

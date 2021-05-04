@@ -72,14 +72,14 @@ habitatmap <-  paste0(inputdir, "/glymemap.txt")
 glymemask <- read.linearmask(file = habitatmap, spacing = 4)
 ```
 Now we can display the data:
-```{r plotglyme, eval = FALSE, fig.width = 7, fig.height = 3}
-par(mar = c(1,1,1,1))
+```{r plotglyme, eval = TRUE, fig.width = 7, fig.height = 3}
+par(mar = c(1,1,4,1))
 plot(glymemask)
 plot(arvicola, add = TRUE, tracks = TRUE)
 plot(traps(arvicola), add = TRUE)
 ```
-\setkeys{Gin}{height=80mm, keepaspectratio=true}
-![arvicolaplot][arvicolaplot]
+<!-- \setkeys{Gin}{height=80mm, keepaspectratio=true} -->
+<!-- ![arvicolaplot][arvicolaplot] -->
   
 **Fig. 1.** Water vole captures along R. Glyme in June 1984. Traps (red
   crosses) spanned 860 m of river bank.
@@ -269,8 +269,8 @@ The user may replace the default graph with one that more precisely
 represents the linear network. For example, nodes may be added
 precisely at the intersections of streams, and linked by edges to the
 adjoining mask points, while deleting 'skip' edges. You are mostly
-on your own here, but see http://rpubs.com/edzer/spatialnetworks and
-possibly https://CRAN.R-project.org/package=shp2graph.
+on your own here, but see https://rpubs.com/edzer/spatialnetworks/ and
+possibly https://CRAN.R-project.org/package=shp2graph/.
 
 The functions `showedges`, `replot` and `deleteedges` are provided for editing the graph (see Examples in `help(deleteedges)`). `addedges` may be used to replace edges deleted by mistake or to bridge unwanted gaps in a network. `cleanskips` drops all but the shortest edge joining any two different lines; it is called by default by `read.linearmask`.
 
@@ -363,7 +363,7 @@ Here's how it works, carrying on our Silverstream example:
 trapfile <- paste0(inputdir, "/silverstreamtraps.txt")
 tr <- read.traps(trapfile, detector = "multi")
 ```
-```{r simCH, eval = TRUE}
+```{r simCH, eval = TRUE, cache = TRUE}
 # simulate population of 2 animals / km
 pop <- sim.linearpopn(mask = silverstreammask, D = 2)
 # simulate detections using network distances
@@ -372,15 +372,15 @@ CH <- sim.capthist(traps = tr, popn = pop, noccasions = 4,
                    userdist = networkdistance)
 summary(CH)    # detector spacing uses Euclidean distances
 ```
-```{r plotsim, eval=FALSE}
+```{r plotsim, eval=TRUE}
 # and plot the simulated detections...
 par(mar = c(1,1,1,1))
 plot(silverstreammask)
 plot(CH, add = TRUE, tracks = TRUE, varycol = TRUE, rad = 100, cappar = list(cex = 2))
 plot(tr, add = TRUE)
 ```
-\setkeys{Gin}{height=85mm, keepaspectratio=true}
-![silverstreamCH][silverstreamCH]
+<!-- \setkeys{Gin}{height=85mm, keepaspectratio=true} -->
+<!-- ![silverstreamCH][silverstreamCH] -->
 
 **Fig. 6.** Simulated detections of linear population. Colours vary
   (subtly) among individuals. Red crosses indicate trap
@@ -671,7 +671,7 @@ the same fraction of a 2-sided linear normal home range.
 
 Bivand, R., Keitt, T and Rowlingson, B. (2016). rgdal: Bindings
   for the Geospatial Data Abstraction Library. R package version 1.1-9.
-  https://CRAN.R-project.org/package=rgdal
+  https://CRAN.R-project.org/package=rgdal/
   
 Borchers, D. L. and Efford, M. G. (2008) Spatially explicit maximum
    likelihood methods for capture--recapture studies. *Biometrics*
@@ -679,7 +679,7 @@ Borchers, D. L. and Efford, M. G. (2008) Spatially explicit maximum
 
 Csardi, G. and Nepusz, T. (2006) The igraph software package for
    complex network research, InterJournal, Complex Systems
-   1695. http://igraph.org.
+   1695. https://igraph.org/.
 
 Efford, M. G. (1985) *The structure and dynamics of water vole
    populations*. D.Phil thesis, University of Oxford.
@@ -689,10 +689,10 @@ spatially explicit capture--recapture data. *Ecology* **95**,
 1341--1348.
 
 ESRI (1998) *ESRI shapefile technical description*.
-    http://www.esri.com/library/whitepapers/pdfs/shapefile.pdf.
+    https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf.
 
 Pebesma, E.J. and Bivand, R. S. (2005) Classes and methods for spatial
-   data in R. *R News* **5(2)**, http://cran.r-project.org/doc/Rnews/.
+   data in R. *R News* **5(2)**, https://cran.r-project.org/doc/Rnews/.
 
 Royle, J. A., Chandler, R. B., Gazenski, K. D. and Graves,
 T. A. (2013) Spatial capture--recapture models for jointly estimating
@@ -836,10 +836,10 @@ terminal traps) was adequate, even for males.
 [masks]: masks.png
 [networklength]: networklength.png
 
-[secr-manual.pdf]: http://www.otago.ac.nz/density/pdfs/secr-manual.pdf
-[secr-datainput.pdf]: http://www.otago.ac.nz/density/pdfs/secr-datainput.pdf
-[secr-noneuclidean.pdf]: http://www.otago.ac.nz/density/pdfs/secr-noneuclidean.pdf
-[secr]: https://CRAN.R-project.org/package=secr
-[secrlinear]: https://CRAN.R-project.org/package=secrlinear
-[secrdesign]: https://CRAN.R-project.org/package=secrdesign
+[secr-manual.pdf]: https://www.otago.ac.nz/density/pdfs/secr-manual.pdf
+[secr-datainput.pdf]: https://www.otago.ac.nz/density/pdfs/secr-datainput.pdf
+[secr-noneuclidean.pdf]: https://www.otago.ac.nz/density/pdfs/secr-noneuclidean.pdf
+[secr]: https://CRAN.R-project.org/package=secr/
+[secrlinear]: https://CRAN.R-project.org/package=secrlinear/
+[secrdesign]: https://CRAN.R-project.org/package=secrdesign/
 

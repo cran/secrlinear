@@ -2,7 +2,7 @@ citHeader("To cite package 'secrlinear' in publications use:")
 
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
 vers <- paste("R package version", meta$Version)
-url <- "https://CRAN.R-project.org/package=secrlinear"
+url <- "https://CRAN.R-project.org/package=secrlinear/"
 
 citEntry(entry="Manual",
     title = "secrlinear: Spatially Explicit Capture--Recapture for Linear Habitats",

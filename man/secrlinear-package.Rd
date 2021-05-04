@@ -15,8 +15,8 @@ An \pkg{secr} add-on package for linear habitat models.
 \tabular{ll}{
 Package: \tab secr\cr
 Type: \tab Package\cr
-Version: \tab 1.1.1\cr
-Date: \tab 2017-12-13\cr
+Version: \tab 1.1.4\cr
+Date: \tab 2021-05-04\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
 
@@ -91,7 +91,7 @@ A more complex linear network (\link{Silverstream}) is provided as an ESRI shape
 \references{
 
  Csardi, G. and Nepusz, T. (2006) The igraph software package for complex network
-  research. \emph{InterJournal, Complex Systems} \bold{1695}. \url{http://igraph.org}.
+  research. \emph{InterJournal, Complex Systems} \bold{1695}. \url{https://igraph.org/}.
 
  Pebesma, E.J. and Bivand, R. S. (2005) Classes and methods for spatial
   data in R. \emph{R News} \bold{5}(\bold{2}), \url{https://cran.r-project.org/doc/Rnews/}.

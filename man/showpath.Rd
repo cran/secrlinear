@@ -48,7 +48,7 @@ package. There may be others.
 \references{
 
   Csardi, G. and Nepusz, T. (2006) The igraph software package for complex network
-  research, InterJournal, Complex Systems 1695. \url{http://igraph.org}.
+  research, InterJournal, Complex Systems 1695. \url{https://igraph.org/}.
 
 }
 

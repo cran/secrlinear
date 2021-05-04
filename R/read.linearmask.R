@@ -5,7 +5,7 @@
 ## 2014-10-31 optional read from shapefile
 ## 2014-11-03 make.linearmask (called by read.linearmask and rbind.linearmask)
 ## "this resource by B. Rowlingson is quite inspiring :"
-## http://rstudio-pubs-static.s3.amazonaws.com/1572_7599552b60454033a0d5c5e6d2e34ffb.html
+## https://rstudio-pubs-static.s3.amazonaws.com/1572_7599552b60454033a0d5c5e6d2e34ffb.html
 ############################################################################################
 
 make.linearmask <- function (SLDF, spacing, spacingfactor, graph, cleanskips)  {

@@ -1,3 +1,16 @@
+Changes in version 1.1.4 (2021-05-04)
+
+Other
+    o   fixed URLs
+
+Changes in version 1.1.2 (2021-05-03)
+
+Other
+    o   update arvicola dataset to 3-D form (secr>=3.0.1)
+    o   add rmarkdown to Suggests as requested by CRAN 
+    o   packages sp and igraph moved from Depends to Imports
+    o   Depends R >= 3.5.0 (serialization issue)
+
 Changes in version 1.1.1 (2017-12-13)
 
 Other
