@@ -1,7 +1,5 @@
 ## ----setup, message = FALSE, warning = FALSE----------------------------------
 library(secrlinear)   # also loads secr
-library(rgdal)        # to read shapefiles
-library(igraph)       # to investigate edge lengths
 options(digits = 4)   # for more readable output
 inputdir <- system.file("extdata", package = "secrlinear")
 
@@ -14,7 +12,7 @@ arvicola <- read.capthist(captfile, trapfile, covname = "sex")
 habitatmap <-  paste0(inputdir, "/glymemap.txt")
 glymemask <- read.linearmask(file = habitatmap, spacing = 4)
 
-## ----plotglyme, eval = TRUE, fig.width = 7, fig.height = 3--------------------
+## ----plotglyme, eval = TRUE, fig.width = 7, fig.height = 3.5------------------
 par(mar = c(1,1,4,1))
 plot(glymemask)
 plot(arvicola, add = TRUE, tracks = TRUE)
@@ -42,13 +40,15 @@ silverstreammask <- read.linearmask(file = habitatmap, spacing = 50)
 par(mar = c(1,1,1,1))
 plot(silverstreammask)
 
-## ----networklength, eval = FALSE----------------------------------------------
-#  networklength <- sum(SpatialLinesLengths(attr(silverstreammask, "SLDF"))) / 1000
-#  discrepancy <- networklength - masklength(silverstreammask)  # km
+## ----networklength, eval = TRUE-----------------------------------------------
+sldf <- attr(silverstreammask, "SLDF")
+networklength <- sum(sp::SpatialLinesLengths(sldf)) / 1000   # km
+discrepancy <- networklength - masklength(silverstreammask)  # km
 
 ## ----silvermask2, eval = FALSE------------------------------------------------
 #  habitatmap <- paste0(inputdir, "/silverstream.shp")
-#  silverstreamSLDF <- rgdal::readOGR(dsn = habitatmap, layer = "silverstream")
+#  silverstreamsf <- st_read(habitatmap)
+#  silverstreamSLDF <- as(silverstreamsf, 'Spatial')
 #  silverstreammask <- read.linearmask(data = silverstreamSLDF, spacing = 50)
 
 ## ----dataframemask, eval=TRUE-------------------------------------------------
@@ -56,8 +56,8 @@ x <- seq(0, 4*pi, length = 200)
 xy <- data.frame(x = x*100, y = sin(x)*300)
 linmask <- read.linearmask(data = xy, spacing = 20)
 
-## ----plotlinmask, eval = FALSE------------------------------------------------
-#  plot(linmask)
+## ----plotlinmask, eval = TRUE-------------------------------------------------
+plot(linmask)
 
 ## ----showpath, eval = FALSE---------------------------------------------------
 #  # start interactive session and click on two points
@@ -67,9 +67,9 @@ linmask <- read.linearmask(data = xy, spacing = 20)
 trps <- make.line(linmask, detector = "proximity", n = 40, startbuffer = 0, by = 300,
                   endbuffer = 80, cluster = c(0,40,80), type = 'randomstart')
 
-## ----plotline, eval = FALSE---------------------------------------------------
-#  plot(linmask)
-#  plot(trps, add = TRUE, detpar = list(pch = 16, cex = 1.5, col='red'))
+## ----plotline, eval = TRUE, fig.width = 7, fig.height = 3.5-------------------
+plot(linmask)
+plot(trps, add = TRUE, detpar = list(pch = 16, cex = 1.2, col='red'))
 
 ## ----snappoints, eval = FALSE-------------------------------------------------
 #  plot(silverstreammask)
@@ -115,14 +115,14 @@ plot(tr, add = TRUE)
 region.N(fit2DEuc)
 region.N(fit1DNet)
 
-## ----plotregion, eval = FALSE-------------------------------------------------
-#  par(mfrow = c(1,2), mar = c(1,1,1,1))
-#  plot(fit2DEuc$mask)
-#  plot(traps(arvicola), add = TRUE)
-#  mtext(side = 3,line = -1.5, "fit2DEuc$mask", cex = 1)
-#  plot(fit1DNet$mask)
-#  plot(traps(arvicola), add = TRUE)
-#  mtext(side = 3,line = -1.5,"fit1DNet$mask", cex = 1)
+## ----plotregion, eval = TRUE, fig.width = 6.5, fig.height=3-------------------
+par(mfrow = c(1,2), mar = c(1,1,1,1))
+plot(fit2DEuc$mask)
+plot(traps(arvicola), add = TRUE)
+mtext(side = 3,line = -1.8, "fit2DEuc$mask", cex = 0.9)
+plot(fit1DNet$mask)
+plot(traps(arvicola), add = TRUE)
+mtext(side = 3,line = -1.8,"fit1DNet$mask", cex = 0.9)
 
 ## ----derived, eval = TRUE-----------------------------------------------------
 derived(fit2DEuc)

@@ -13,10 +13,10 @@ An \pkg{secr} add-on package for linear habitat models.
 
 \details{
 \tabular{ll}{
-Package: \tab secr\cr
+Package: \tab secrlinear\cr
 Type: \tab Package\cr
-Version: \tab 1.1.4\cr
-Date: \tab 2021-05-04\cr
+Version: \tab 1.2.1\cr
+Date: \tab 2023-05-19\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
 
@@ -114,8 +114,7 @@ arvicola <- read.capthist(captfile = paste0(inputdir, "/Jun84capt.txt"),
 ## -- from text file of x-y coordinates
 glymemask <- read.linearmask(file = paste0(inputdir, "/glymemap.txt"), spacing = 4)
 ## -- from a previously constructed SpatialLinesDataFrame
-library(rgdal)
-SLDF <- rgdal::readOGR(dsn = paste0(inputdir,"/glymemap.shp"), layer = "glymemap")
+SLDF <- as(sf::st_read(paste0(inputdir,"/glymemap.shp")), 'Spatial')
 glymemask <- read.linearmask(data = SLDF, spacing = 4)
 
 ## display the mask and capture data
