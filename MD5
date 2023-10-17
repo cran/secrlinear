@@ -1,6 +1,6 @@
-68450e3f9aa334e6fb1dfa5f21788c85 *DESCRIPTION
+75cc6f7302134fec884c174188ee5053 *DESCRIPTION
 94cedda5afecdd38531e8c83fad5f148 *NAMESPACE
-e04014da0a96e578a1caabd85f573adc *NEWS
+b50d015d86a14553e2cda8337003e798 *NEWS
 8f10fd838e62b536e3837ab94c1e8b58 *R/asgraph.R
 318bc4d79ccf972c05e6dd7d1b86ef75 *R/checkmoves.R
 d6f32fa0ca6ced83fb67c0b4b2028b4b *R/clipmask.R
@@ -25,7 +25,7 @@ df745d00144ef56628f5c209364d7842 *build/vignette.rds
 fd854d1d135d020e5dbe1a3bf9a6e0ff *inst/CITATION
 cb4c272bb14fba6e64bd8dd2b3a5091d *inst/doc/secrlinear-vignette.R
 b54a401ae562d49f0a508530b2afbd29 *inst/doc/secrlinear-vignette.Rmd
-3d33f4bf3f0d75030f7947da90c5d9d7 *inst/doc/secrlinear-vignette.pdf
+aa6e7d6fd4dfdeae0a752664a6eaa2c1 *inst/doc/secrlinear-vignette.pdf
 324bda68ab36e1cd0878cd574cfa1b1d *inst/extdata/Jun84capt.txt
 f55f83671f81edf2fa70a7afbe101d87 *inst/extdata/glymemap.dbf
 55b9820f8a49927a2332dc1d1b84f3e3 *inst/extdata/glymemap.shp
@@ -49,7 +49,7 @@ e9bff8b59d634492c1754f928ecc82c3 *man/glymemask.Rd
 0a774c53d4085ba2467258813a5a5b60 *man/plotmethods.Rd
 794b6e808a38f96311dc2a95c7b73926 *man/rbind.linearmask.Rd
 926e9f73354414ca0b769761a7f18bf7 *man/read.linearmask.Rd
-a1540a57562bc0c4e3167b865435ba7a *man/secrlinear-package.Rd
+b834176e131cf319a7eca5215e175cc1 *man/secrlinear-package.Rd
 458e163fd32d30b8d4a81119aac64e90 *man/showpath.Rd
 9164a3fc8cdb792bcbf84657c421e710 *man/sim.linearpopn.Rd
 d767053d510261ffddb1874068f23790 *man/subset.linearmask.Rd
@@ -60,7 +60,7 @@ d767053d510261ffddb1874068f23790 *man/subset.linearmask.Rd
 86a87fe1354ba4a7e40bf020a3553a0e *vignettes/networklength.png
 b54a401ae562d49f0a508530b2afbd29 *vignettes/secrlinear-vignette.Rmd
 cc9640540cb0d72d60938bbcaa68ab67 *vignettes/secrlinear-vignette_cache/latex/__packages
-c67178815f7983b84fa18a702a935bf0 *vignettes/secrlinear-vignette_cache/latex/simCH_db1ac341d243eb801269716fdc5a63c0.RData
-2d5b6a62194993c8a46c38f67ed8e3a0 *vignettes/secrlinear-vignette_cache/latex/simCH_db1ac341d243eb801269716fdc5a63c0.rdb
-f80069cfc8802d9e723e241ef1c65341 *vignettes/secrlinear-vignette_cache/latex/simCH_db1ac341d243eb801269716fdc5a63c0.rdx
+2f03a48678f0c064e9c6210116fa2608 *vignettes/secrlinear-vignette_cache/latex/simCH_8f5f1111a8cc19494e2c1652b5a63d27.RData
+d908a94755240eb066fc93c4ee5b20bb *vignettes/secrlinear-vignette_cache/latex/simCH_8f5f1111a8cc19494e2c1652b5a63d27.rdb
+58ac0de51990475572223716b17f8961 *vignettes/secrlinear-vignette_cache/latex/simCH_8f5f1111a8cc19494e2c1652b5a63d27.rdx
 d54f189a4a79345e5616a51a77d0fcaa *vignettes/showpath.png
