@@ -214,7 +214,8 @@ summary(sims1)
 
 ## ----sims2, eval = FALSE------------------------------------------------------
 #  sims2 <- run.scenarios(nrepl = 5, trapset = trplist, maskset = linmask,
-#       det.args = list(det.arg), scenarios = scen1, seed = 345, fit = TRUE)
+#       det.args = list(det.arg), fit.args = list(fit.arg), scenarios = scen1,
+#       seed = 345, fit = TRUE)
 #  summary(sims2)
 
 ## ----appendix, eval = FALSE---------------------------------------------------
