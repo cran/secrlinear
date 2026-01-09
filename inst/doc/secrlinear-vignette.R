@@ -46,10 +46,10 @@ networklength <- sum(sp::SpatialLinesLengths(sldf)) / 1000   # km
 discrepancy <- networklength - masklength(silverstreammask)  # km
 
 ## ----silvermask2, eval = FALSE------------------------------------------------
-#  habitatmap <- paste0(inputdir, "/silverstream.shp")
-#  silverstreamsf <- st_read(habitatmap)
-#  silverstreamSLDF <- as(silverstreamsf, 'Spatial')
-#  silverstreammask <- read.linearmask(data = silverstreamSLDF, spacing = 50)
+# habitatmap <- paste0(inputdir, "/silverstream.shp")
+# silverstreamsf <- st_read(habitatmap)
+# silverstreamSLDF <- as(silverstreamsf, 'Spatial')
+# silverstreammask <- read.linearmask(data = silverstreamSLDF, spacing = 50)
 
 ## ----dataframemask, eval=TRUE-------------------------------------------------
 x <- seq(0, 4*pi, length = 200)
@@ -60,8 +60,8 @@ linmask <- read.linearmask(data = xy, spacing = 20)
 plot(linmask)
 
 ## ----showpath, eval = FALSE---------------------------------------------------
-#  # start interactive session and click on two points
-#  showpath(silverstreammask, lwd = 3)
+# # start interactive session and click on two points
+# showpath(silverstreammask, lwd = 3)
 
 ## ----makeline, eval = TRUE----------------------------------------------------
 trps <- make.line(linmask, detector = "proximity", n = 40, startbuffer = 0, by = 300,
@@ -72,18 +72,18 @@ plot(linmask)
 plot(trps, add = TRUE, detpar = list(pch = 16, cex = 1.2, col='red'))
 
 ## ----snappoints, eval = FALSE-------------------------------------------------
-#  plot(silverstreammask)
-#  loc <- locator(30)
-#  xy <- snapPointsToLinearMask(data.frame(loc), silverstreammask)
-#  tr <- read.traps(data = xy, detector = 'multi')
-#  plot(tr, add = TRUE)
+# plot(silverstreammask)
+# loc <- locator(30)
+# xy <- snapPointsToLinearMask(data.frame(loc), silverstreammask)
+# tr <- read.traps(data = xy, detector = 'multi')
+# plot(tr, add = TRUE)
 
 ## ----transect, eval = FALSE---------------------------------------------------
-#  transects <- read.traps('transectxy.txt', detector = 'transect')
-#  capt <- read.table('capt.txt')
-#  tempCH <- make.capthist(capt, transects, fmt = 'XY')
-#  tempCH <- snip(tempCH, by = 100)   # for 100-m segments
-#  CH <- reduce(tempCH, outputdetector = "count")
+# transects <- read.traps('transectxy.txt', detector = 'transect')
+# capt <- read.table('capt.txt')
+# tempCH <- make.capthist(capt, transects, fmt = 'XY')
+# tempCH <- snip(tempCH, by = 100)   # for 100-m segments
+# CH <- reduce(tempCH, outputdetector = "count")
 
 ## ----silvertrps, eval = TRUE, echo = FALSE------------------------------------
 trapfile <- paste0(inputdir, "/silverstreamtraps.txt")
@@ -106,10 +106,10 @@ plot(CH, add = TRUE, tracks = TRUE, varycol = TRUE, rad = 100, cappar = list(cex
 plot(tr, add = TRUE)
 
 ## ----sfit, eval = FALSE-------------------------------------------------------
-#  userd <- networkdistance(tr, silverstreammask)
-#  userd[!is.finite(userd)] <- 1e8  # testing
-#  sfit <- secr.fit(CH, mask = silverstreammask, details = list(userdist = userd))
-#  predict(sfit)
+# userd <- networkdistance(tr, silverstreammask)
+# userd[!is.finite(userd)] <- 1e8  # testing
+# sfit <- secr.fit(CH, mask = silverstreammask, details = list(userdist = userd))
+# predict(sfit)
 
 ## ----regionN, eval = TRUE-----------------------------------------------------
 region.N(fit2DEuc)
@@ -129,60 +129,60 @@ derived(fit2DEuc)
 derived(fit1DNet)
 
 ## ----covariates, eval = FALSE-------------------------------------------------
-#  # interactively obtain LineID for central 'spine' by clicking on
-#  # each component line in plot
-#  tmp <- getLineID(silverstreammask)
-#  # extract coordinates of 'spine'
-#  spine <- subset(silverstreammask, LineID = tmp$LineID)
-#  # obtain network distances to spine and save for later use
-#  netd <- networkdistance(spine, silverstreammask)  # matrix dim = c(nrow(spine), nrow(mask))
-#  dfs <- apply(netd, 2, min) / 1000  # km
-#  covariates(silverstreammask)$dist.from.spine <- dfs
+# # interactively obtain LineID for central 'spine' by clicking on
+# # each component line in plot
+# tmp <- getLineID(silverstreammask)
+# # extract coordinates of 'spine'
+# spine <- subset(silverstreammask, LineID = tmp$LineID)
+# # obtain network distances to spine and save for later use
+# netd <- networkdistance(spine, silverstreammask)  # matrix dim = c(nrow(spine), nrow(mask))
+# dfs <- apply(netd, 2, min) / 1000  # km
+# covariates(silverstreammask)$dist.from.spine <- dfs
 
 ## ----plotcovariate, eval = FALSE----------------------------------------------
-#  par(mar=c(1,1,1,4))
-#  plot(silverstreammask, covariate = 'dist.from.spine', col = topo.colors(13),
-#       cex = 1.5, legend = FALSE)
-#  strip.legend('right', legend = seq(0, 6.5, 0.5), col = topo.colors(13),
-#               title = 'dist.from.spine km', height = 0.35)
-#  plot(spine, add = TRUE, linecol = NA, cex = 0.3)
+# par(mar=c(1,1,1,4))
+# plot(silverstreammask, covariate = 'dist.from.spine', col = topo.colors(13),
+#      cex = 1.5, legend = FALSE)
+# strip.legend('right', legend = seq(0, 6.5, 0.5), col = topo.colors(13),
+#              title = 'dist.from.spine km', height = 0.35)
+# plot(spine, add = TRUE, linecol = NA, cex = 0.3)
 
 ## ----checkmoves, eval = FALSE, strip.white = TRUE-----------------------------
-#  # initially OK (no movement > 1000 m)--
-#  checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
-#  # deliberately break graph of linear mask
-#  attr(glymemask, 'graph')[200:203,201:204] <- NULL
-#  # no longer OK --
-#  out <- checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
-#  # display captures of animals 32 and 35 whose records span break
-#  out$df
+# # initially OK (no movement > 1000 m)--
+# checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
+# # deliberately break graph of linear mask
+# attr(glymemask, 'graph')[200:203,201:204] <- NULL
+# # no longer OK --
+# out <- checkmoves(arvicola, mask = glymemask, accept = c(0,1000))
+# # display captures of animals 32 and 35 whose records span break
+# out$df
 
 ## ----showedges, eval = FALSE--------------------------------------------------
-#  # problem shows up where voles recaptured either side of break:
-#  showedges(glymemask, col = 'red', lwd = 6)
-#  plot(out$CH, add = TRUE, tracks = TRUE, rad=8,cappar=list(cex=1.5))
-#  pos <- traps(arvicola)['560.B',]
-#  text(pos$x+5, pos$y+80, 'break', srt=90, cex=1.1)
+# # problem shows up where voles recaptured either side of break:
+# showedges(glymemask, col = 'red', lwd = 6)
+# plot(out$CH, add = TRUE, tracks = TRUE, rad=8,cappar=list(cex=1.5))
+# pos <- traps(arvicola)['560.B',]
+# text(pos$x+5, pos$y+80, 'break', srt=90, cex=1.1)
 
 ## ----plotglymeedges, eval = FALSE---------------------------------------------
-#  plot(glymemask)
-#  replot(glymemask)  # click on corners to zoom in
-#  showedges(glymemask, col = 'red', lwd = 2, add=T)
-#  glymemask <- addedges(glymemask)
+# plot(glymemask)
+# replot(glymemask)  # click on corners to zoom in
+# showedges(glymemask, col = 'red', lwd = 2, add=T)
+# glymemask <- addedges(glymemask)
 
 ## ----linearHR, eval = FALSE---------------------------------------------------
-#  par(mfrow = c(1,1), mar = c(1,1,1,5))
-#  plot(silverstreammask)
-#  centres <- data.frame(locator(4))
-#  OK <- networkdistance(centres, silverstreammask) < 1000
-#  for (i in 1:nrow(OK)) {
-#      m1 <- subset(silverstreammask, OK[i,])
-#      plot(m1, add = TRUE, col = 'red', cex = 1.7)
-#      ml <- masklength(m1)
-#      points(centres, pch = 16, col = 'yellow', cex = 1.4)
-#      text (1406000, mean(m1$y), paste(ml, 'km'), cex = 1.2)
-#  }
-#  
+# par(mfrow = c(1,1), mar = c(1,1,1,5))
+# plot(silverstreammask)
+# centres <- data.frame(locator(4))
+# OK <- networkdistance(centres, silverstreammask) < 1000
+# for (i in 1:nrow(OK)) {
+#     m1 <- subset(silverstreammask, OK[i,])
+#     plot(m1, add = TRUE, col = 'red', cex = 1.7)
+#     ml <- masklength(m1)
+#     points(centres, pch = 16, col = 'yellow', cex = 1.4)
+#     text (1406000, mean(m1$y), paste(ml, 'km'), cex = 1.2)
+# }
+# 
 
 ## ----secrdesign, eval = TRUE, warning = FALSE---------------------------------
 library(secrdesign)
@@ -213,96 +213,96 @@ sims1 <- run.scenarios(nrepl = 50, trapset = trplist, maskset = linmask,
 summary(sims1)
 
 ## ----sims2, eval = FALSE------------------------------------------------------
-#  sims2 <- run.scenarios(nrepl = 5, trapset = trplist, maskset = linmask,
-#       det.args = list(det.arg), fit.args = list(fit.arg), scenarios = scen1,
-#       seed = 345, fit = TRUE)
-#  summary(sims2)
+# sims2 <- run.scenarios(nrepl = 5, trapset = trplist, maskset = linmask,
+#      det.args = list(det.arg), fit.args = list(fit.arg), scenarios = scen1,
+#      seed = 345, fit = TRUE)
+# summary(sims2)
 
 ## ----appendix, eval = FALSE---------------------------------------------------
-#  # It is efficient to pre-compute a matrix of distances between traps (rows)
-#  # and mask points (columns)
-#  distmat <- networkdistance (traps(arvicola), glymemask, glymemask)
-#  
-#  # Morning and evening trap checks as a time covariate
-#  tcov <- data.frame(ampm = rep(c("am","pm"),3))
-#  
-#  glymefit1 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
-#                        details = list(userdist = distmat),
-#                        model = g0~1, hcov = "sex")
-#  glymefit2 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
-#                        details = list(userdist = distmat),
-#                        model = g0~ampm, timecov = tcov, hcov = "sex")
-#  glymefit3 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
-#                        details = list(userdist = distmat),
-#                        model = g0~ampm + h2, timecov = tcov, hcov = "sex")
-#  glymefit4 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
-#                        details = list(userdist = distmat),
-#                        model = list(sigma~h2, g0~ampm + h2),
-#                        timecov = tcov, hcov = "sex")
-#  
-#  fitlist <- secrlist(glymefit1, glymefit2, glymefit3, glymefit4)
-#  # dropping the detectfn (halfnormal) column to save space...
-#  AIC(fitlist)[,-2]
-#  #                                       model npar logLik   AIC  AICc dAICc AICcwt
-#  # glymefit4 D~1 g0~ampm + h2 sigma~h2 pmix~h2    7 -322.5 659.1 665.3  0.00      1
-#  # glymefit3  D~1 g0~ampm + h2 sigma~1 pmix~h2    6 -347.3 706.7 711.1 45.80      0
-#  # glymefit2       D~1 g0~ampm sigma~1 pmix~h2    5 -353.5 717.0 720.0 54.66      0
-#  # glymefit1          D~1 g0~1 sigma~1 pmix~h2    4 -356.8 721.6 723.5 58.20      0
-#  
-#  # summaries of estimated density and sex ratio under different models
-#  options(digits=3)
-#  
-#  # model does not affect density estimate
-#  collate(fitlist, perm = c(2,3,1,4))[,,1,"D"]
-#  #           estimate SE.estimate  lcl  ucl
-#  # glymefit1     26.5        5.27 18.0 39.0
-#  # glymefit2     26.4        5.26 18.0 38.9
-#  # glymefit3     26.3        5.25 17.9 38.8
-#  # glymefit4     27.2        5.45 18.5 40.2
-#  
-#  # model does affect the estimate of sex ratio (here proportion female)
-#  collate(fitlist, perm=c(2,3,1,4))[,,1,"pmix"]
-#  #           estimate SE.estimate   lcl   ucl
-#  # glymefit1    0.615      0.0954 0.421 0.779
-#  # glymefit2    0.615      0.0954 0.421 0.779
-#  # glymefit3    0.634      0.0938 0.439 0.793
-#  # glymefit4    0.669      0.0897 0.477 0.817
-#  
-#  # predictions from best model
-#  newdata <- expand.grid(ampm = c("am", "pm"), h2 = c("F", "M"))
-#  predict(glymefit4, newdata = newdata)
-#  
-#  # $`ampm = am, h2 = F`
-#  #        link estimate SE.estimate    lcl    ucl
-#  # D       log   27.239      5.4478 18.477 40.158
-#  # g0    logit    0.218      0.0463  0.141  0.322
-#  # sigma   log   13.624      1.8764 10.414 17.823
-#  # pmix  logit    0.669      0.0897  0.477  0.817
-#  #
-#  # $`ampm = pm, h2 = F`
-#  #        link estimate SE.estimate     lcl    ucl
-#  # D       log   27.239      5.4478 18.4768 40.158
-#  # g0    logit    0.116      0.0293  0.0694  0.186
-#  # sigma   log   13.624      1.8764 10.4136 17.823
-#  # pmix  logit    0.669      0.0897  0.4774  0.817
-#  #
-#  # $`ampm = am, h2 = M`
-#  #        link estimate SE.estimate     lcl    ucl
-#  # D       log   27.239      5.4478 18.4768 40.158
-#  # g0    logit    0.153      0.0392  0.0908  0.246
-#  # sigma   log   70.958     10.0551 53.8247 93.545
-#  # pmix  logit    0.331      0.0897  0.1829  0.523
-#  #
-#  # $`ampm = pm, h2 = M`
-#  #        link estimate SE.estimate     lcl    ucl
-#  # D       log  27.2394      5.4478 18.4768 40.158
-#  # g0    logit   0.0782      0.0201  0.0468  0.128
-#  # sigma   log  70.9581     10.0551 53.8247 93.545
-#  # pmix  logit   0.3311      0.0897  0.1829  0.523
+# # It is efficient to pre-compute a matrix of distances between traps (rows)
+# # and mask points (columns)
+# distmat <- networkdistance (traps(arvicola), glymemask, glymemask)
+# 
+# # Morning and evening trap checks as a time covariate
+# tcov <- data.frame(ampm = rep(c("am","pm"),3))
+# 
+# glymefit1 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
+#                       details = list(userdist = distmat),
+#                       model = g0~1, hcov = "sex")
+# glymefit2 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
+#                       details = list(userdist = distmat),
+#                       model = g0~ampm, timecov = tcov, hcov = "sex")
+# glymefit3 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
+#                       details = list(userdist = distmat),
+#                       model = g0~ampm + h2, timecov = tcov, hcov = "sex")
+# glymefit4 <- secr.fit(arvicola, mask = glymemask, trace = FALSE,
+#                       details = list(userdist = distmat),
+#                       model = list(sigma~h2, g0~ampm + h2),
+#                       timecov = tcov, hcov = "sex")
+# 
+# fitlist <- secrlist(glymefit1, glymefit2, glymefit3, glymefit4)
+# # dropping the detectfn (halfnormal) column to save space...
+# AIC(fitlist)[,-2]
+# #                                       model npar logLik   AIC  AICc dAICc AICcwt
+# # glymefit4 D~1 g0~ampm + h2 sigma~h2 pmix~h2    7 -322.5 659.1 665.3  0.00      1
+# # glymefit3  D~1 g0~ampm + h2 sigma~1 pmix~h2    6 -347.3 706.7 711.1 45.80      0
+# # glymefit2       D~1 g0~ampm sigma~1 pmix~h2    5 -353.5 717.0 720.0 54.66      0
+# # glymefit1          D~1 g0~1 sigma~1 pmix~h2    4 -356.8 721.6 723.5 58.20      0
+# 
+# # summaries of estimated density and sex ratio under different models
+# options(digits=3)
+# 
+# # model does not affect density estimate
+# collate(fitlist, perm = c(2,3,1,4))[,,1,"D"]
+# #           estimate SE.estimate  lcl  ucl
+# # glymefit1     26.5        5.27 18.0 39.0
+# # glymefit2     26.4        5.26 18.0 38.9
+# # glymefit3     26.3        5.25 17.9 38.8
+# # glymefit4     27.2        5.45 18.5 40.2
+# 
+# # model does affect the estimate of sex ratio (here proportion female)
+# collate(fitlist, perm=c(2,3,1,4))[,,1,"pmix"]
+# #           estimate SE.estimate   lcl   ucl
+# # glymefit1    0.615      0.0954 0.421 0.779
+# # glymefit2    0.615      0.0954 0.421 0.779
+# # glymefit3    0.634      0.0938 0.439 0.793
+# # glymefit4    0.669      0.0897 0.477 0.817
+# 
+# # predictions from best model
+# newdata <- expand.grid(ampm = c("am", "pm"), h2 = c("F", "M"))
+# predict(glymefit4, newdata = newdata)
+# 
+# # $`ampm = am, h2 = F`
+# #        link estimate SE.estimate    lcl    ucl
+# # D       log   27.239      5.4478 18.477 40.158
+# # g0    logit    0.218      0.0463  0.141  0.322
+# # sigma   log   13.624      1.8764 10.414 17.823
+# # pmix  logit    0.669      0.0897  0.477  0.817
+# #
+# # $`ampm = pm, h2 = F`
+# #        link estimate SE.estimate     lcl    ucl
+# # D       log   27.239      5.4478 18.4768 40.158
+# # g0    logit    0.116      0.0293  0.0694  0.186
+# # sigma   log   13.624      1.8764 10.4136 17.823
+# # pmix  logit    0.669      0.0897  0.4774  0.817
+# #
+# # $`ampm = am, h2 = M`
+# #        link estimate SE.estimate     lcl    ucl
+# # D       log   27.239      5.4478 18.4768 40.158
+# # g0    logit    0.153      0.0392  0.0908  0.246
+# # sigma   log   70.958     10.0551 53.8247 93.545
+# # pmix  logit    0.331      0.0897  0.1829  0.523
+# #
+# # $`ampm = pm, h2 = M`
+# #        link estimate SE.estimate     lcl    ucl
+# # D       log  27.2394      5.4478 18.4768 40.158
+# # g0    logit   0.0782      0.0201  0.0468  0.128
+# # sigma   log  70.9581     10.0551 53.8247 93.545
+# # pmix  logit   0.3311      0.0897  0.1829  0.523
 
 ## ----derivedapp, eval = FALSE-------------------------------------------------
-#  derived(glymefit4, distribution = 'binomial')
-#  #     estimate SE.estimate   lcl   ucl    CVn     CVa    CVD
-#  # esa   0.9545          NA    NA    NA     NA      NA     NA
-#  # D    27.2396       2.867 22.17 33.46 0.1038 0.01747 0.1053
+# derived(glymefit4, distribution = 'binomial')
+# #     estimate SE.estimate   lcl   ucl    CVn     CVa    CVD
+# # esa   0.9545          NA    NA    NA     NA      NA     NA
+# # D    27.2396       2.867 22.17 33.46 0.1038 0.01747 0.1053
 

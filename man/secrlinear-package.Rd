@@ -16,8 +16,8 @@ An \pkg{secr} add-on package for linear habitat models.
 \tabular{ll}{
 Package: \tab secrlinear\cr
 Type: \tab Package\cr
-Version: \tab 1.2.4\cr
-Date: \tab 2024-10-22\cr
+Version: \tab 1.2.5\cr
+Date: \tab 2026-01-09\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
 
@@ -45,8 +45,9 @@ Other useful functions are:
 }
 
 Documentation is provided in a vignette
-\url{../doc/secrlinear-vignette.pdf} and in the pdf version of the help
-pages \url{../doc/secrlinear-manual.pdf}
+\href{../doc/secrlinear-vignette.pdf}{secrlinear-vignette.pdf} and in the pdf 
+version of the \href{https://CRAN.R-project.org/package=secrlinear/secrlinear.pdf}{help
+pages}.
 
 The package draws on the packages \pkg{sp} (Pebesma and Bivand 2005) and
 \pkg{igraph} (Csardi and Nepusz 2006).

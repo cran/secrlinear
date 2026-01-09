@@ -675,7 +675,7 @@ spatially explicit capture--recapture data. *Ecology* **95**,
 1341--1348.
 
 ESRI (1998) *ESRI shapefile technical description*.
-    https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf.
+    https://www.esri.com/content/dam/esrisites/sitecore-archive/Files/Pdfs/library/whitepapers/pdfs/shapefile.pdf.
 
 Pebesma, E.J. and Bivand, R. S. (2005) Classes and methods for spatial
    data in R. *R News* **5(2)**, https://cran.r-project.org/doc/Rnews/.

@@ -1,13 +1,13 @@
 Package: secrlinear
 Type: Package
 Title: Spatially Explicit Capture-Recapture for Linear Habitats
-Version: 1.2.4
+Version: 1.2.5
 Depends: R (>= 3.5.0), secr (>= 3.0.1)
 Imports: MASS, methods, sp, igraph, sf
 Suggests: knitr, rmarkdown, secrdesign, spatstat (>= 3.0-2),
         spatstat.geom, spatstat.linnet, testthat
 VignetteBuilder: knitr
-Date: 2024-10-22
+Date: 2026-01-09
 Authors@R: person(given = "Murray",
     family = "Efford",
     role = c("aut", "cre"),
@@ -20,7 +20,8 @@ LazyData: yes
 URL: https://www.otago.ac.nz/density/,
         https://github.com/MurrayEfford/secrlinear/
 NeedsCompilation: no
-Packaged: 2024-10-22 05:54:26 UTC; murra
-Author: Murray Efford [aut, cre] (<https://orcid.org/0000-0001-5231-5184>)
+Packaged: 2026-01-09 00:16:34 UTC; murra
+Author: Murray Efford [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-5231-5184>)
 Repository: CRAN
-Date/Publication: 2024-10-22 06:20:02 UTC
+Date/Publication: 2026-01-09 06:10:02 UTC
